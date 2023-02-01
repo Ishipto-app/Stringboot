@@ -1,0 +1,2 @@
+# Stringboot
+ class-stringboot
