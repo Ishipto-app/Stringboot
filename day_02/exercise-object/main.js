@@ -37,7 +37,7 @@ let products = [
         count: 3,
     },
 ]
-
+const randomIndex = num => Math.floor(Math.random() * num);
 // 6. Thêm 1 sản phẩm bất kỳ vào trong mảng product
 const addRandomProduct = arr => {
     let randomName = arr[randomIndex(arr.length)].name;
