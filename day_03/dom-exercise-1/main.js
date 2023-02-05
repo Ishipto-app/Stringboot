@@ -16,8 +16,9 @@ para.innerHTML = `Tôi có thể làm <em> bất cứ điều gì </em> tôi mu�
 //     <li>Item 3</li>
 // </ul>
 
-const ul = document.querySelectorAll('ul li');
-ul.forEach(item => {
+const ul = document.querySelector('ul');
+li = ul.querySelectorAll("li")
+li.forEach(item => {
     item.style.color = "blue";
 })
 // Câu 3. Cho mã HTML có nội dung như sau (tạo thẻ ul-li bằng html):
