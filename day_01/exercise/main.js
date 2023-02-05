@@ -52,7 +52,7 @@ console.log(`Xin chao tieng phap => ${translate("FR")}`)
 
 // Ví dụ : subString(“xinchaocacbandenvoiTechmaster”) => “xinchaocac…”
 const subString = str => {
-    if(str.length > 14){
+    if(str.length > 15){
         return str.slice(0, 10) + "..."
     } else {
         return "do dai ko du 15 ky tu"
