@@ -139,6 +139,7 @@ btn.addEventListener("click", () => {
 // Bấm vào nút nào thì gọi API tương ứng với tên của nút đó và hiển thị (chỉ hiển thị title trong ul li)
 // Resource nào đang được active thì highlight button đó lên
 const ulEl = document.getElementById("list");
+const spanEl = document.getElementById("type-list");
 let objBtn = {
     posts: document.getElementById("posts"),
     photos: document.getElementById("photos"),
@@ -147,14 +148,17 @@ let objBtn = {
 
 const getList = async (type) => {
     try {
-        console.log(type)
         let res = await axios.get(`https://jsonplaceholder.typicode.com/${type}`);
         renderList(type, res.data)
     } catch (err) {
         console.log(err)
+        alert(`Get list ${type} fail!`)
     }
 }
 const renderList = (type, arr) => {
+    // set type value
+    spanEl.innerText = type;
+
     // set active button
     for (const key in objBtn) {
         if (key === type) {
@@ -170,7 +174,6 @@ const renderList = (type, arr) => {
         ulEl.innerHTML = "<li>No item</li>"
         return;
     }
-    console.log(arr)
     arr.map(el => {
         const item = document.createElement("li");
         item.innerText = el.title;
