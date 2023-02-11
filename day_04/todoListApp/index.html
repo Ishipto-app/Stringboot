@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>TodoList App</h1>
+
+    <input id="todo-input" type="text" placeholder="Enter todo title ...">
+    <button id="btn-add">Add</button>
+
+    <ul id="todo-list">
+        <li>
+            <input type="checkbox" checked>
+            <span class="active">Đi chơi</span>
+            <button>Edit</button>
+            <button>Delete</button>
+        </li>
+        <li>
+            <input type="checkbox">
+            <span>Học bài</span>
+            <button>Edit</button>
+            <button>Delete</button>
+        </li>
+    </ul>
+
+    <script src="./main.js"></script>
+</body>
+</html>

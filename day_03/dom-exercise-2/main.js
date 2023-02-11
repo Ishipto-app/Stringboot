@@ -13,6 +13,9 @@ let colors = [
 // Khi click vào nút “more box” thì số lượng box tăng lên 5 (tương ứng với 5 màu trong mảng colors), đồng thời số lượng total box cũng tăng lên 5
 
 const boxes = document.querySelector(".boxes");
+// xoa noi dung ben trong
+boxes.innerHTML = "";
+
 const span = document.querySelector(".points");
 
 // Cập nhật số lượng total box trong thẻ <span>
