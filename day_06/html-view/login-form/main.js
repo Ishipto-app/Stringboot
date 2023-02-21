@@ -27,8 +27,13 @@ btnLogin.addEventListener('click', async () => {
             passwordEle.value = "";
         } catch (error) {
             console.log(error);
-            console.log(error.message);
-            setError(btnLogin, error.message);
+            let message;
+            if(error.response && error.response.data) {
+                message = error.response.data.message;
+            } else {
+                message = error.message;
+            }
+            setError(btnLogin, message);
         }
     }
 });
