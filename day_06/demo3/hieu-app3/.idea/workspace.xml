@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3368bc36-abf4-4937-93f7-1df6b4efe3dc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../demo/src/main/java/com/example/demo/controller/WebController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../demo/src/main/java/com/example/demo/request/CreatePostRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../demo2/src/main/java/com/example/demo/controller/MyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../demo2/src/main/java/com/example/demo/controller/TodoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../demo2/src/main/java/com/example/demo/modal/Todo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../demo2/src/main/java/com/example/demo/modal/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../demo2/src/main/java/com/example/demo/request/CreateTodoRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/controller/TodoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/controller/WebController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/exception/BadRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/exception/ErrorResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/exception/NotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/model/Todo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/request/CreatePostRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/request/CreateTodoRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/request/UpdateTodoRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo/src/main/java/com/example/demo/service/TodoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/controller/BmiController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/controller/ColorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/exception/BadRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/exception/CustomExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/exception/ErrorResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/exception/NotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/model/Bmi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/model/Color.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/model/UserServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/request/CheckUserRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/request/GetBmiByPostRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/service/BmiService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/service/ColorService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hieu-app/demo2/src/main/java/com/example/demo/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../newApp/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../newApp/src/main/java/com/company/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../day_04/todoListApp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../day_04/todoListApp/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2LzpYBE2653tVMacFnTIsBEorzI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3368bc36-abf4-4937-93f7-1df6b4efe3dc" name="Changes" comment="" />
+      <created>1676883815062</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676883815062</updated>
+    </task>
+    <servers />
+  </component>
+</project>
