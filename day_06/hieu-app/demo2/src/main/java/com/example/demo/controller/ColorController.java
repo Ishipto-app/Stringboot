@@ -19,7 +19,7 @@ public class ColorController {
 //    }
     @GetMapping("/random-color")
     public ResponseEntity<?> getColorByParamType(@RequestParam Integer type){
-        Color color = colorService.getColorByType(type);
+        String color = colorService.randomColor(type);
         return ResponseEntity.ok(color);
     }
 }

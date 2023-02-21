@@ -1,4 +1,5 @@
 package com.example.demo.service;
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.Bmi;
 import com.example.demo.request.GetBmiByPostRequest;
 import org.springframework.stereotype.Service;
@@ -28,4 +29,8 @@ public class BmiService {
         return bmi;
     }
 
+    public Double caculatorBmi(Double height, Double weight) {
+        if(height <= 0 || weight <= 0) throw new BadRequestException("can nang chieu cao phai > 0");
+        return weight/(height * height);
+    }
 }

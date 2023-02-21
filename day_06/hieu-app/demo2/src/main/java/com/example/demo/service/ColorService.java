@@ -1,8 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.Color;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Service
 public class ColorService {
@@ -12,6 +17,39 @@ public class ColorService {
     private Integer randomIndex (Integer num) {
         return (int) Math.floor(Math.random() * num);
     }
+
+    public String randomColor(Integer type){
+        return switch (type) {
+            case 1 -> randomColorName();
+            case 2 -> randomHexColor();
+            case 3 -> randomRbgColor();
+            default -> throw new BadRequestException("type khong hop le");
+        };
+    }
+
+    private String randomRbgColor() {
+        Random rd = new Random();
+        int r = rd.nextInt(256);
+        int g = rd.nextInt(256);
+        int b = rd.nextInt(256);
+        return String.format("rgb(%d, %d, %d)", r, g, b);
+    }
+
+    private String randomHexColor() {
+        Random rd = new Random();
+        String color = "#";
+        for (int i = 0; i < 6; i++) {
+            color += Integer.toHexString(rd.nextInt(16));
+        }
+        return color;
+    }
+
+    private String randomColorName() {
+        List<String> colors = new ArrayList<>(List.of("blue", "green", "black", "red"));
+        Random rd = new Random();
+        return colors.get(rd.nextInt(colors.toArray().length));
+    }
+
     public Color getColorByType(Integer type){
         switch(type) {
             case 1:

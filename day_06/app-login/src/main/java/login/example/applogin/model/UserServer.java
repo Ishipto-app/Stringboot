@@ -5,6 +5,8 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Builder
 public class UserServer{
     private Integer id;

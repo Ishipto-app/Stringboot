@@ -15,7 +15,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> postBmiByData(@Valid @RequestBody CheckUserRequest request) {
+    public ResponseEntity<?> checkLogin(@Valid @RequestBody CheckUserRequest request) {
 
         User user = userService.checkUserServer(request);
         return ResponseEntity.ok(user);
