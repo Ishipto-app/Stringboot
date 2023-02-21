@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+<body>
+    <div id="login-container" class="validate-form">
+        <h2>Login Form</h2>
+        <div class="input-row">
+            <input type="text" placeholder="Username" id="username" value="abc1"/>
+            <small>Error message</small>
+        </div>
+        <div class="input-row">
+            <input type="password" placeholder="Password" id="password" value="abcd11"/>
+            <small>Error message</small>
+        </div>
+        <div class="input-row">
+            <button class="btn btn-submit" id="btn-login">
+                LOGIN
+            </button>
+            <br>
+            <small>Error message</small>
+        </div>
+    </div>
+    <div id="logout-container" class="validate-form hide">
+        <h2>Xin chao</h2>
+        <div class="input-row">
+            <button class="btn btn-submit" id="btn-logout">
+                LOGOUT
+            </button>
+        </div>
+
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
