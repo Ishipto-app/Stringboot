@@ -5,6 +5,7 @@ import hieu.test.coursesmanager.dto.CourseListDto;
 import hieu.test.coursesmanager.request.CreateCourseRequest;
 import hieu.test.coursesmanager.request.UpdateCourseRequest;
 import hieu.test.coursesmanager.service.CourseAdminService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +26,14 @@ public class CourseAdminController {
 
     // api/v1/admin/courses
     @PostMapping("courses")
-    public CourseDto createCourse(@RequestBody CreateCourseRequest request){
+    public CourseDto createCourse(@Valid @RequestBody CreateCourseRequest request){
+        System.out.println(request.getName());
         return courseAdminService.createCourse(request);
     }
 
     // api/v1/admin/courses/{id}
     @PutMapping("courses/{id}")
-    public CourseDto updateCourse(@PathVariable Integer id, @RequestBody UpdateCourseRequest request){
+    public CourseDto updateCourse(@PathVariable Integer id,@Valid @RequestBody UpdateCourseRequest request){
         return courseAdminService.updateCourse(id, request);
     }
 
