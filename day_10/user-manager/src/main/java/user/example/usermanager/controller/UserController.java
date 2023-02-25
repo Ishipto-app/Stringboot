@@ -1,5 +1,6 @@
 package user.example.usermanager.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,29 +36,29 @@ public class UserController {
 
     //http://localhost:8080/api/v1/users
     @PostMapping("users")
-    public UserDto createUser(@RequestBody CreateUserRequest request){
+    public UserDto createUser(@Valid @RequestBody CreateUserRequest request){
         return userService.createUser(request);
     }
 
     //http://localhost:8080/api/v1/users/{id}
     @PutMapping("users/{id}")
-    public UserDto updateUser(@PathVariable int id, @RequestBody UpdateUserRequest request){
+    public UserDto updateUser(@PathVariable int id,@Valid @RequestBody UpdateUserRequest request){
         return userService.updateUser(id, request);
     }
 
     //http://localhost:8080/api/v1/users/{id}/update-avatar
     @PutMapping("users/{id}/update-avatar")
-    public UserDto updateUserAvatar(@PathVariable int id, @RequestBody UpdateUserAvatarRequest request){
+    public UserDto updateUserAvatar(@PathVariable int id,@Valid @RequestBody UpdateUserAvatarRequest request){
         return userService.updateUserAvatar(id, request);
     }
     // http://localhost:8080/api/v1/users/{id}/update-password
     @PutMapping("users/{id}/update-password")
-    public UserDto updateUserPassword(@PathVariable int id, @RequestBody UpdateUserPasswordRequest request){
+    public UserDto updateUserPassword(@PathVariable int id,@Valid @RequestBody UpdateUserPasswordRequest request){
         return userService.updateUserPassword(id, request);
     }
     // http://localhost:8080/api/v1/users/{id}/fotgot-password
     @PutMapping("users/{id}/fotgot-password")
-    public UserDto updateUserPasswordForgot(@PathVariable int id, @RequestBody UpdateUserPasswordForgotRequest request){
+    public UserDto updateUserPasswordForgot(@PathVariable int id,@Valid @RequestBody UpdateUserPasswordForgotRequest request){
         return userService.updateUserPasswordForgot(id, request);
     }
 
