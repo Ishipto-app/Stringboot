@@ -1,0 +1,101 @@
+id,name,brand,price,count
+1,LeBaron,Samsung,33530415,5
+2,LeMans,Pontiac,14484772,11
+3,924 S,Porsche,12541830,1
+4,Alcyone SVX,Subaru,31854845,12
+5,Ram 3500,Dodge,18826360,5
+6,Astro Pro,Chevrolet,16438146,13
+7,Galant,Mitsubishi,14494906,1
+8,CLK-Class,Mercedes-Benz,15062269,9
+9,Outlander,Mitsubishi,10367230,22
+10,Viper Pro,Dodge,24546647,27
+11,Suburban 2500,GMC,23042978,23
+12,MX-6,Mazda,16618320,13
+13,Impala SS,Chevrolet,6918228,3
+14,Titan,Nissan,9025352,24
+15,Grand Vitara,Suzuki,21775605,9
+16,L300,Mitsubishi,19797706,3
+17,H1,Hummer,8526448,30
+18,Econoline E250,Ford,4605354,5
+19,CX-7,Mazda,5312165,1
+20,Murano,Nissan,8803798,26
+21,Mazda6,Mazda,11288558,27
+22,Elantra,Hyundai,25307971,9
+23,1500 Club Coupe,GMC,17636500,9
+24,A4,Audi,10517597,3
+25,300SD,Mercedes-Benz,19246006,9
+26,F350,Ford,6313224,3
+27,Neon,Dodge,8480506,8
+28,Caprice Classic,Chevrolet,9355310,11
+29,xD,Scion,29632563,1
+30,G,Infiniti,24252613,6
+31,G-Series G30,Chevrolet,13225548,8
+32,Grand Marquis,Mercury,25217048,1
+33,RL,Acura,7279182,9
+34,6 Series,BMW,10149576,18
+35,Wrangler,Jeep,4047011,11
+36,F450,Ford,19555720,7
+37,LSS,Oldsmobile,28947048,19
+38,Tribeca,Subaru,11683674,12
+39,Silverado,Chevrolet,5638595,28
+40,Expedition EL,Ford,33177876,9
+41,S8,Audi,12238440,7
+42,Savana 3500,GMC,17269417,7
+43,Legacy,Subaru,18513867,13
+44,TSX,Acura,29075029,21
+45,Sienna,Toyota,14661184,3
+46,Maxima,Nissan,4753141,5
+47,Murciélago,Lamborghini,8132442,7
+48,Starion,Mitsubishi,16676088,1
+49,Precis,Mitsubishi,12446831,1
+50,Grand Caravan,Dodge,13885597,16
+51,Liberty,Jeep,28551850,27
+52,Corvette,Chevrolet,25387589,9
+53,CL-Class,Mercedes-Benz,8017157,15
+54,Cabriolet,Audi,19267950,2
+55,CR-Z,Honda,10268682,9
+56,Suburban 2500,Chevrolet,4713780,19
+57,Alpina B7,BMW,16011690,18
+58,9-3,Saab,34374187,28
+59,Malibu,Chevrolet,30934630,26
+60,Quest,Nissan,18053246,22
+61,Taurus,Ford,33925116,7
+62,4Runner,Toyota,8348557,21
+63,Highlander,Toyota,6644935,24
+64,Esteem,Suzuki,26880409,17
+65,Talon,Eagle,16437309,29
+66,Corvette,Chevrolet,7364574,4
+67,A6,Audi,26428314,13
+68,Endeavor,Mitsubishi,18502770,16
+69,XC70,Volvo,11123217,28
+70,Esprit,Lotus,23602528,7
+71,Discovery,Land Rover,7170853,10
+72,Escort,Ford,6428052,5
+73,Lumina,Chevrolet,28472390,23
+74,Gran Sport,Maserati,30561849,18
+75,Dakota Club,Dodge,5885929,21
+76,Accord,Honda,8788368,7
+77,Familia,Mazda,4771365,7
+78,Camry,Toyota,5702104,7
+79,Montero Sport,Mitsubishi,21618149,16
+80,GS,Lexus,31701900,25
+81,Thunderbird,Ford,27358747,24
+82,LS,Lexus,34344687,28
+83,XT,Subaru,13592427,11
+84,Impreza,Subaru,27649356,29
+85,Escape,Ford,8649342,4
+86,Matrix,Toyota,22752218,22
+87,CLK-Class,Mercedes-Benz,13942039,13
+88,H1,Hummer,12606625,3
+89,Corvette,Chevrolet,17551494,20
+90,Camaro,Chevrolet,29920025,21
+91,Savana 2500,GMC,5568038,24
+92,Pajero,Mitsubishi,9349094,19
+93,Echo,Toyota,8061383,14
+94,Discovery,Land Rover,24309421,25
+95,MKX,Lincoln,15436468,25
+96,Fleetwood,Cadillac,5396659,19
+97,B-Series,Mazda,23413285,12
+98,SVX,Subaru,22452181,21
+99,Cooper,MINI,30258431,23
+100,8 Series,BMW,22709772,7
