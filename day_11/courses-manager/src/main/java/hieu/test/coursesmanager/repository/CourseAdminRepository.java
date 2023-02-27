@@ -19,6 +19,10 @@ import hieu.test.coursesmanager.model.Course;
 @Repository
 public class CourseAdminRepository {
     public CourseListDto getAllCourseByPageAndPagesize(Integer page, Integer pageSize) {
+        page = page == null ? 1 : page;
+        pageSize = pageSize == null ? 10 : pageSize;
+        if(page < 1) throw new BadRequestException("page value >= 1");
+        if(pageSize < 1) throw new BadRequestException("page size value >= 1");
         List<CourseDto> courseDto = courses.stream()
                 .skip((page - 1) * pageSize)
                 .limit(pageSize)

@@ -17,8 +17,6 @@ public class CourseAdminService {
     private final CourseAdminRepository courseAdminRepository;
 
     public CourseListDto getAllCourseByPageAndPagesize(Integer page, Integer pageSize) {
-        page = page == null ? 1 : page;
-        pageSize = pageSize == null ? 10 : pageSize;
         return courseAdminRepository.getAllCourseByPageAndPagesize(page, pageSize);
     }
 
