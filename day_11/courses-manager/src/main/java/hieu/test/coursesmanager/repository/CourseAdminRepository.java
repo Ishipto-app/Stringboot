@@ -20,7 +20,7 @@ import hieu.test.coursesmanager.model.Course;
 public class CourseAdminRepository {
     public CourseListDto getAllCourseByPageAndPagesize(Integer page, Integer pageSize) {
         List<CourseDto> courseDto = courses.stream()
-                .skip((page - 1 * pageSize))
+                .skip((page - 1) * pageSize)
                 .limit(pageSize)
                 .map(course -> CourseMapper.courseDto(course))
                 .toList();
