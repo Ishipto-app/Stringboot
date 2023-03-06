@@ -46,6 +46,7 @@ public class TodoController {
 //        }
 
         // sau khi co CustomerExceptionHandler thi khi co loi no tu nhan loi trong do
+        System.out.println("update " + id);
         Todo todo = todoService.getTodoById(id);
         return ResponseEntity.ok(todo);
     }
@@ -60,6 +61,7 @@ public class TodoController {
     // thay doi du lieu
     @PutMapping("todos/{id}")
     public Todo updateTodo(@PathVariable Integer id,@Valid @RequestBody UpdateTodoRequest request){
+        System.out.println("update " + request.getStatus() + " id = " + id);
         return todoService.updateTodo(id, request);
     }
 

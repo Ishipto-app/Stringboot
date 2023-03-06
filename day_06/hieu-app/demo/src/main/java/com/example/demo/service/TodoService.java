@@ -78,5 +78,6 @@ public class TodoService {
     public void deleteTodo(Integer id){
         // bieu thuc landa su dung de trien khai 1 function interface (la interface ben trong co duy nhat 1 methol co the tu custom)
         todos.removeIf(todo -> Objects.equals(todo.getId(), id));
+        System.out.println("xoa todo " + id);
     }
 }

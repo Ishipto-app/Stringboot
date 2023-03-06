@@ -1,6 +1,5 @@
 package user.example.usermanager.controller;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +7,7 @@ import user.example.usermanager.dto.UserDto;
 import user.example.usermanager.request.*;
 import user.example.usermanager.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,7 +36,7 @@ public class UserController {
 
     //http://localhost:8080/api/v1/users
     @PostMapping("users")
-    public UserDto createUser(@Valid @RequestBody CreateUserRequest request){
+    public UserDto createUser(@RequestBody CreateUserRequest request){
         return userService.createUser(request);
     }
 

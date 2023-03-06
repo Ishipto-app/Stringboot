@@ -1,8 +1,7 @@
 package user.example.usermanager.request;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
