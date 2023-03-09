@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom";
+let users = []
 
 function UseList() {
-    const [users, setUsers] = useState([]);
     const [filterUsers, setFilterUsers] = useState([]);
     const [searchValue, setSearchValue] = useState("");
 
@@ -9,9 +10,8 @@ function UseList() {
       const getAllUsers = async () => {
         try {
             let rs = await fetch(`http://localhost:8080/api/v1/users`);
-            let data = await rs.json();
-            setUsers(data);
-            setFilterUsers([...data]);
+            users = await rs.json();
+            setFilterUsers([...users]);
         } catch (error) {
             console.error(error)
         }
@@ -24,8 +24,8 @@ function UseList() {
         let rs = await fetch(`http://localhost:8080/api/v1/users/${id}`, {
             method: 'DELETE'
         });
-        let newUsers = users.filter(user => user.id !== id);
-        setUsers(newUsers)
+        users = users.filter(user => user.id !== id);
+        filterUser();
       } catch (error) {
           console.error(error)
       }
@@ -41,6 +41,7 @@ function UseList() {
       }
       setFilterUsers(newUsers)
     }
+    // thay noi dung the a -> Link doi href = to
   return (
     <>
         <div className="container mt-5 mb-5">
@@ -50,7 +51,7 @@ function UseList() {
                 <div className="col-md-10">
 
                     <div className="d-flex justify-content-between align-items-center mt-5 mb-4">
-                        <a href="./create.html" className="btn btn-warning">Tạo user</a>
+                        <Link to="/users/create" className="btn btn-warning">Tạo user</Link>
                         <input type="text" id="search" className="form-control w-50" placeholder="Tìm kiếm user" 
                           onKeyDown={e => e.key === "Enter" ? filterUser() : null} 
                           value={searchValue} 
@@ -80,7 +81,7 @@ function UseList() {
                                   <td>{user.phone}</td>
                                   <td>{user.address}</td>
                                   <td>
-                                    <a href=""className="btn btn-success">Xem chi tiết</a>
+                                    <Link to={"/users/" + user.id} className="btn btn-success">Xem chi tiết</Link>
                                     <button className="btn btn-danger" onClick={() => deleteUser(user.id)}>Xóa</button>
                                   </td>
                                 </tr>

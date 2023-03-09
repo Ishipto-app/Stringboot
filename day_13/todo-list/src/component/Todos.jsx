@@ -11,6 +11,7 @@ function Todos() {
     const getAllTodos = async () => {
       try {
           let rs = await fetch(API_URL);
+          console.log(rs)
           let data = await rs.json();
           console.log(data)
           setTodos(data);
@@ -72,7 +73,6 @@ function Todos() {
           method: 'PUT',
           body: JSON.stringify(data)
       });
-      console.log(rs)
       if(rs.status === 200){
         const newTodos = todos.map(item => {
           if(item.id === id){

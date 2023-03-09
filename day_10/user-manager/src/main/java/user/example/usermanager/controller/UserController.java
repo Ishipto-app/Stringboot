@@ -36,7 +36,7 @@ public class UserController {
 
     //http://localhost:8080/api/v1/users
     @PostMapping("users")
-    public UserDto createUser(@RequestBody CreateUserRequest request){
+    public UserDto createUser(@Valid @RequestBody CreateUserRequest request){
         return userService.createUser(request);
     }
 
