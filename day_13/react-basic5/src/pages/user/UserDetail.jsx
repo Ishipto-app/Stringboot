@@ -34,6 +34,36 @@ function UserDetail() {
     avatar: ""
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getProvinces = async () => {
+      try {
+          let rs = await axios.get(`https://provinces.open-api.vn/api/p/`);
+          setAddressList([...rs.data]);
+      } catch (error) {
+          console.error(error)
+      }
+    }
+    getProvinces();
+    const getUserById = async () => {
+      try {
+          let rs = await axios.get(API_URL + "/" + userId);
+          setUser(rs.data);
+      } catch (error) {
+          console.error(error)
+      }
+    }
+    getUserById();
+  }, []);
+
+  useEffect(() => {
+    if(user.id){
+      setValue('name', user.name);
+      setValue('email', user.email);
+      setValue('phone', user.phone);
+      setValue('address', user.address);
+    }
+  }, [user, setValue]);
   
   const schema = yup.object({
     name: yup.string().required("Ten khong duoc de trong"),
@@ -88,36 +118,6 @@ function UserDetail() {
         alert("update fail")
     }
   }
-
-  useEffect(() => {
-    const getProvinces = async () => {
-      try {
-          let rs = await axios.get(`https://provinces.open-api.vn/api/p/`);
-          setAddressList([...rs.data]);
-      } catch (error) {
-          console.error(error)
-      }
-    }
-    getProvinces();
-    const getUserById = async () => {
-      try {
-          let rs = await axios.get(API_URL + "/" + userId);
-          setUser(rs.data);
-      } catch (error) {
-          console.error(error)
-      }
-    }
-    getUserById();
-  }, []);
-
-  useEffect(() => {
-    if(user.id){
-      setValue('name', user.name);
-      setValue('email', user.email);
-      setValue('phone', user.phone);
-      setValue('address', user.address);
-    }
-  }, [user, setValue]);
 
   const updateUser = async (value) => {
     try {

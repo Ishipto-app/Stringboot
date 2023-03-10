@@ -11,6 +11,20 @@ const API_URL = "http://localhost:8080/api/v1/users"
 function UserCreate() {
   const [addressList, setAddressList] = useState([]);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const getProvinces = async () => {
+      try {
+          let rs = await fetch(`https://provinces.open-api.vn/api/p/`);
+          let provinces = await rs.json();
+          setAddressList([...provinces]);
+      } catch (error) {
+          console.error(error)
+      }
+    }
+    getProvinces();
+  }, []);
+  
 
   const schema = yup.object({
     name: yup.string().required("Ten khong duoc de trong"),
@@ -21,7 +35,10 @@ function UserCreate() {
       //0912345678
       .matches(/(0[3|5|7|8|9])+([0-9]{8})\b/g, "Phone khong dung dinh dang")
       .required("Phone khong duoc de trong"),
-    address: yup.string().required("Dia chi khong duoc de trong")
+    address: yup.string().required("Dia chi khong duoc de trong"),
+    password: yup.string()
+      .min(6, "Password co it nhat 6 ky tu")
+      .required("Password khong duoc de trong")
   }).required();
   
   const { register, handleSubmit, formState:{ errors } } = useForm({
@@ -42,18 +59,6 @@ function UserCreate() {
         console.error(error)
     }
   }
-  useEffect(() => {
-    const getProvinces = async () => {
-      try {
-          let rs = await fetch(`https://provinces.open-api.vn/api/p/`);
-          let provinces = await rs.json();
-          setAddressList([...provinces]);
-      } catch (error) {
-          console.error(error)
-      }
-    }
-    getProvinces();
-  }, []);
   
   return (
     <>
@@ -93,6 +98,7 @@ function UserCreate() {
                         <div className="mb-3">
                             <label className="col-form-label">Password</label>
                             <input type="text" id="password" className="form-control" {...register("password")}  />
+                            <p className='text-danger'>{errors.password?.message}</p>
                         </div>
                     </div>
                     <div className="text-center mt-3">
