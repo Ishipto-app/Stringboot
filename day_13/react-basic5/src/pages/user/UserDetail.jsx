@@ -1,7 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect} from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
 const API_URL = "http://localhost:8080/api/v1/users";
+import * as bootstrap from "bootstrap/dist/js/bootstrap.bundle";
 
 // mot so thu vien validate form
 // React-hook-form
@@ -9,13 +13,81 @@ const API_URL = "http://localhost:8080/api/v1/users";
 // Redux-form
 
 function UserDetail() {
-  let userData = null;
+  const modalRef = useRef(null);
+  const modalElement = modalRef.current;
+  let modal
+  if (modalElement) {
+    modal = new bootstrap.Modal(modalElement);
+  }
   //lay ra user id tren url
   
   const {userId} = useParams();
   const [addressList, setAddressList] = useState([]);
-  const [user, setUser] = useState(null);
-  const history = useNavigate();
+
+  // controller <input> value null/underfind change to ""
+  const [user, setUser] = useState({
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    avatar: ""
+  });
+  const navigate = useNavigate();
+  
+  const schema = yup.object({
+    name: yup.string().required("Ten khong duoc de trong"),
+    email: yup.string()
+      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Email khong hop le")
+      .required("Email khong duoc de trong"),
+    phone: yup.string()
+      //0912345678
+      .matches(/(0[3|5|7|8|9])+([0-9]{8})\b/g, "Phone khong dung dinh dang")
+      .required("Phone khong duoc de trong"),
+  }).required();
+  
+  const { register, handleSubmit, formState:{ errors }, setValue } = useForm({
+    // lien ket thong tin da dinh nghia
+    resolver: yupResolver(schema),
+    mode: "all"
+  });
+  
+  const onSubmit = async data => {
+    try {
+      let rs = await axios.put(API_URL + "/" + userId, data)
+      console.log(rs)
+      alert("update user thanh cong");
+    } catch (error) {
+        console.error(error)
+    }
+  }
+
+  const changePassword = yup.object({
+    oldPassword: yup.string()
+      .required("Nhap lai password"),
+    newPassword: yup.string()
+      .min(6, "Mat khau moi co it nhat 6 ky tu")
+      .required("Nhap password moi")
+  }).required();
+  
+  const { register: reUpdatePass, handleSubmit: handleSubmitPass, formState:{ errors: errorsPass } } = useForm({
+    // lien ket thong tin da dinh nghia
+    resolver: yupResolver(changePassword),
+    mode: "all"
+  });  
+
+  const onSubmitPass = async data => {
+    try {
+      let rs = await axios.put(API_URL + "/" + userId + "/update-password", data)
+      console.log(rs)
+      if(modal) modal.hide();
+      alert("update password thanh cong");
+    } catch (error) {
+        console.error(error)
+        console.log(error.resopnse.data)
+        alert("update fail")
+    }
+  }
 
   useEffect(() => {
     const getProvinces = async () => {
@@ -37,6 +109,15 @@ function UserDetail() {
     }
     getUserById();
   }, []);
+
+  useEffect(() => {
+    if(user.id){
+      setValue('name', user.name);
+      setValue('email', user.email);
+      setValue('phone', user.phone);
+      setValue('address', user.address);
+    }
+  }, [user, setValue]);
 
   const updateUser = async (value) => {
     try {
@@ -94,26 +175,31 @@ function UserDetail() {
 
           <div className="row justify-content-center">
               <div className="col-md-6">
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="bg-light p-4">
                       <div className="mb-3">
                           <label className="col-form-label">Fullname</label>
-                          <input type="text" id="name" className="form-control" value={user?.name} onChange={e => setUser({...user, name: e.target.value})} />
+                          <input type="text" id="name" className="form-control" {...register("name")} />
+                          <p className='text-danger'>{errors.name?.message}</p>
                       </div>
                       <div className="mb-3">
                           <label className="col-form-label">Email</label>
-                          <input type="text" id="email" className="form-control" disabled value={user?.email} />
+                          <input type="text" id="email" className="form-control" disabled {...register("email")} />
+                          <p className='text-danger'>{errors.email?.message}</p>
                       </div>
                       <div className="mb-3">
                           <label className="col-form-label">Phone</label>
-                          <input type="text" id="phone" className="form-control" value={user?.phone} onChange={e => setUser({...user, phone: e.target.value})} />
+                          <input type="text" id="phone" className="form-control" {...register("phone")} />
+                          <p className='text-danger'>{errors.phone?.message}</p>
                       </div>
                       <div className="mb-3">
                           <label className="col-form-label">Address</label>
-                          <select className="form-select" id="address" value={user?.address} onChange={e => setUser({...user, address: e.target.value})}>
+                          <select className="form-select" id="address" {...register("address")}>
                               {addressList.map((item) => (
                                 <option key={item.code} value={item.name}>{item.name}</option>
                               ))}
                           </select>
+                          <p className='text-danger'>{errors.address?.message}</p>
                       </div>
                       <div className="mb-3">
                           <label className="form-label">Avatar</label>
@@ -129,8 +215,7 @@ function UserDetail() {
                       <div className="mb-3">
                           <label className="col-form-label">Password</label>
                           <div className="">
-                              <button type="button" className="btn btn-primary" data-bs-toggle="modal"
-                                  data-bs-target="#modal-change-password">
+                              <button type="button" className="btn btn-primary" onClick={() => modal?.show()}>
                                   Đổi mật khẩu
                               </button>
                               <button className="btn btn-warning" id="btn-forgot-password" onClick={sendNewPassword}>
@@ -140,16 +225,18 @@ function UserDetail() {
                       </div>
                   </div>
                   <div className="text-center mt-3">
-                      <button className="btn btn-secondary btn-back" onClick={() => history("/users")}>Quay lại</button>
-                      <button className="btn btn-success" id="btn-save" onClick={() => updateUser(1)}>Cập nhật</button>
+                      <button className="btn btn-secondary btn-back" onClick={() => navigate("/users")}>Quay lại</button>
+                      <button className="btn btn-success" id="btn-save" type="submit">Cập nhật</button>
                   </div>
+                </form>
               </div>
           </div>
 
-          <div className="modal fade" id="modal-change-password" data-bs-backdrop="static" data-bs-keyboard="false"
+          <div className="modal fade" ref={modalRef} id="modal-change-password" data-bs-backdrop="static" data-bs-keyboard="false"
               tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div className="modal-dialog">
                   <div className="modal-content">
+                    <form  onSubmit={handleSubmitPass(onSubmitPass)}>
                       <div className="modal-header">
                           <h5 className="modal-title" id="staticBackdropLabel">Đổi mật khẩu</h5>
                           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -157,17 +244,20 @@ function UserDetail() {
                       <div className="modal-body">
                           <div className="mb-3">
                               <label className="col-form-label">Mật khẩu cũ</label>
-                              <input type="text" id="old-password" className="form-control" />
+                              <input type="text" id="old-password" className="form-control" {...reUpdatePass("oldPassword")}/>
+                              <p className='text-danger'>{errorsPass.oldPassword?.message}</p>
                           </div>
                           <div className="mb-3">
                               <label className="col-form-label">Mật khẩu mới</label>
-                              <input type="text" id="new-password" className="form-control" />
+                              <input type="text" id="new-password" className="form-control" {...reUpdatePass("newPassword")} />
+                              <p className='text-danger'>{errorsPass.newPassword?.message}</p>
                           </div>
                       </div>
                       <div className="modal-footer">
-                          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                          <button type="button" className="btn btn-primary" id="btn-change-password">Xác nhận</button>
+                          <button type="button" className="btn btn-secondary" onClick={() => modal?.hide()}>Đóng</button>
+                          <button type="submit" className="btn btn-primary" id="btn-change-password">Xác nhận</button>
                       </div>
+                    </form>
                   </div>
               </div>
           </div>

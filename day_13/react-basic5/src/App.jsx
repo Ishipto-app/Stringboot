@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
 import UseList from './pages/user/UserList'
 import UserCreate from './pages/user/UserCreate'

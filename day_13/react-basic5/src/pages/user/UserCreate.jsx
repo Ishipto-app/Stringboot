@@ -4,7 +4,6 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
-import "bootstrap/dist/js/bootstrap.bundle"
 
 
 const API_URL = "http://localhost:8080/api/v1/users"
@@ -16,9 +15,13 @@ function UserCreate() {
   const schema = yup.object({
     name: yup.string().required("Ten khong duoc de trong"),
     email: yup.string()
-      .matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", "Email khong hop le")
+      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Email khong hop le")
       .required("Email khong duoc de trong"),
-    phone: yup.string().required("Phone khong duoc de trong"),
+    phone: yup.string()
+      //0912345678
+      .matches(/(0[3|5|7|8|9])+([0-9]{8})\b/g, "Phone khong dung dinh dang")
+      .required("Phone khong duoc de trong"),
+    address: yup.string().required("Dia chi khong duoc de trong")
   }).required();
   
   const { register, handleSubmit, formState:{ errors } } = useForm({
@@ -51,40 +54,6 @@ function UserCreate() {
     }
     getProvinces();
   }, []);
-
-  const createUser = async () => {
-    let userData = {
-      name: name,
-      email: email,
-      phone: phone,
-      address: address,
-      password: password
-    }
-    // if(title.trim() === ""){
-    //     alert("Tieu de khong duoc de trong");
-    //     return;
-    // }
-    try {
-      let rs = await fetch(API_URL, {
-        headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-        },
-        method: 'POST',
-        body: JSON.stringify(userData)
-      });
-      console.log(rs)
-      let data = await rs.json();
-      if(data.id) {
-        navigate("/users/" + data.id)
-      } else {
-        alert("error")
-        console.error(data)
-      }
-      
-    } catch (error) {
-        console.error(error);
-    }
-  }
   
   return (
     <>
@@ -113,12 +82,13 @@ function UserCreate() {
                         <div className="mb-3">
                             <label className="col-form-label">Address</label>
                             <select className="form-select" id="address" {...register("address")} >
-                              <option hidden >Chọn tỉnh thành phố</option>
+                              <option hidden value="">Chọn tỉnh thành phố</option>
                               {addressList.map((item) => (
                                 <option key={item.code} value={item.name}>{item.name}</option>
                               ))}
                                 
                             </select>
+                            <p className='text-danger'>{errors.address?.message}</p>
                         </div>
                         <div className="mb-3">
                             <label className="col-form-label">Password</label>
@@ -126,7 +96,7 @@ function UserCreate() {
                         </div>
                     </div>
                     <div className="text-center mt-3">
-                        <button className="btn btn-secondary btn-back">Quay lại</button>
+                        <button className="btn btn-secondary btn-back" type="button" onClick={() => navigate("/users")}>Quay lại</button>
                         <button className="btn btn-success" type="submit" id="btn-save">Tạo User</button>
                     </div>
                   </form>

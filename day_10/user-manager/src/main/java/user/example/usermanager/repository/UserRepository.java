@@ -106,7 +106,7 @@ public class UserRepository {
                 user.setPassword(request.getNewPassword());
                 return UserMapper.userDto(user);
             }
-            throw new BadRequestException("password hien tai khong dung");
+            throw new BadRequestException("old password khong dung");
         }
         throw new BadRequestException("không có user với id = " + id);
     }
