@@ -218,7 +218,7 @@ function UserDetail() {
                               <button type="button" className="btn btn-primary" onClick={() => modal?.show()}>
                                   Đổi mật khẩu
                               </button>
-                              <button className="btn btn-warning" id="btn-forgot-password" onClick={sendNewPassword}>
+                              <button type="button" className="btn btn-warning" id="btn-forgot-password" onClick={sendNewPassword}>
                                   Quên mật khẩu
                               </button>
                           </div>
