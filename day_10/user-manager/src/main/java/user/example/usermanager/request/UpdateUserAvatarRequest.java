@@ -12,6 +12,6 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateUserAvatarRequest {
-    @NotEmpty(message = "name không được để trống")
+    @NotEmpty(message = "avatar not nut")
     private String avatar;
 }

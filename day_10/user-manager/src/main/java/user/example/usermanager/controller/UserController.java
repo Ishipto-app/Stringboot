@@ -3,7 +3,9 @@ package user.example.usermanager.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import user.example.usermanager.dto.UserDto;
+import user.example.usermanager.model.response.FileResponse;
 import user.example.usermanager.request.*;
 import user.example.usermanager.service.UserService;
 
@@ -48,8 +50,8 @@ public class UserController {
 
     //http://localhost:8080/api/v1/users/{id}/update-avatar
     @PutMapping("users/{id}/update-avatar")
-    public UserDto updateUserAvatar(@PathVariable int id,@Valid @RequestBody UpdateUserAvatarRequest request){
-        return userService.updateUserAvatar(id, request);
+    public FileResponse updateUserAvatar(@PathVariable int id, @Valid @ModelAttribute("file")MultipartFile file){
+        return userService.updateUserAvatar(id, file);
     }
     // http://localhost:8080/api/v1/users/{id}/update-password
     @PutMapping("users/{id}/update-password")
@@ -57,9 +59,9 @@ public class UserController {
         return userService.updateUserPassword(id, request);
     }
     // http://localhost:8080/api/v1/users/{id}/fotgot-password
-    @PutMapping("users/{id}/fotgot-password")
-    public UserDto updateUserPasswordForgot(@PathVariable int id,@Valid @RequestBody UpdateUserPasswordForgotRequest request){
-        return userService.updateUserPasswordForgot(id, request);
+    @GetMapping("users/{id}/fotgot-password")
+    public String updateUserPasswordForgot(@PathVariable int id){
+        return userService.updateUserPasswordForgot(id);
     }
 
     //http://localhost:8080/api/v1/users/{id}

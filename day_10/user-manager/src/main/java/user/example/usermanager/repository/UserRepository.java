@@ -1,6 +1,7 @@
 package user.example.usermanager.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 import user.example.usermanager.dto.UserDto;
 import user.example.usermanager.exception.BadRequestException;
 import user.example.usermanager.mapper.UserMapper;
@@ -82,13 +83,14 @@ public class UserRepository {
         }
     }
 
-    public UserDto updateUserAvatar(int id, UpdateUserAvatarRequest request) {
+    public UserDto updateUserAvatar(int id, String avatar) {
         Optional<User> userOptional = users.stream()
                 .filter(user -> user.getId() == id)
                 .findFirst();
+
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            user.setAvatar(request.getAvatar());
+            user.setAvatar(avatar);
             return UserMapper.userDto(user);
         }
         throw new BadRequestException("không có user với id = " + id);
@@ -109,14 +111,14 @@ public class UserRepository {
         throw new BadRequestException("không có user với id = " + id);
     }
 
-    public UserDto updateUserPasswordForgot(int id, UpdateUserPasswordForgotRequest request) {
+    public User updateUserPasswordForgot(int id, String password) {
         Optional<User> userOptional = users.stream()
                 .filter(user -> user.getId() == id)
                 .findFirst();
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            user.setPassword(request.getPassword());
-            return UserMapper.userDto(user);
+            user.setPassword(password);
+            return user;
         }
         throw new BadRequestException("không có user với id = " + id);
     }
