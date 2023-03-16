@@ -47,6 +47,13 @@ const addRandomProduct = arr => {
 }
 addRandomProduct(products);
 addRandomProduct(products);
+
+addProduct = () => {
+    let randomProduct = { ...products[randomIndex(products.length)], count: 1};
+    products.push(randomProduct)
+}
+addProduct();
+console.log(products)
 // 7. Xóa tất cả sản phẩm của thương hiệu "Samsung" trong giỏ hàng
 const delBrandProduct = (arr, brand) => arr.filter(ele => ele.brand != brand);
 products = delBrandProduct(products, "Samsung");

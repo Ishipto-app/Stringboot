@@ -14,7 +14,9 @@ import static hieu.test.coursesmanager.db.CourseDB.courses;
 public class CourseRepository {
     public List<CourseDto> getAllCourse(String type, String name, String topic) {
         return courses.stream()
-                .filter(course -> ((type != null && !type.isEmpty() ? course.getType().equals(type) : true) && (name != null && !name.isEmpty() ? course.getName().equals(name) : true) && (topic != null && !topic.isEmpty() ? course.getTopics().contains(topic) : true)))
+                .filter(course -> ((type != null && !type.isEmpty() ? course.getType().equals(type) : true)
+                        && (name != null && !name.isEmpty() ? course.getName().toLowerCase().contains(name.toLowerCase()) : true)
+                        && (topic != null && !topic.isEmpty() ? course.getTopics().contains(topic) : true)))
                 .map(course -> CourseMapper.courseDto(course))
                 .toList();
     }
