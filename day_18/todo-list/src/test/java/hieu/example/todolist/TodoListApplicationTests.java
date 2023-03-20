@@ -37,7 +37,10 @@ class TodoListApplicationTests {
 	@Test
 	@Rollback(value = false)
 	void create_todo() {
-			todoRepository.save(new Todo(null, "title1", false));
+		todoRepository.save(new Todo(null, "title1", false));
+		todoRepository.save(new Todo(null, "title2", false));
+		todoRepository.save(new Todo(null, "title3", false));
+		todoRepository.save(new Todo(null, "title4", false));
 	}
 
 }
