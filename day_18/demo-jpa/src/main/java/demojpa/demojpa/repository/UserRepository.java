@@ -2,6 +2,7 @@ package demojpa.demojpa.repository;
 
 import demojpa.demojpa.dto.UserDto;
 import demojpa.demojpa.entity.User;
+import demojpa.demojpa.projection.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -62,7 +63,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<UserDto> findUserDtoByName(String name);
 
     //3. su dung Native Query
+    @Query(nativeQuery = true, name = "getUserDtoUsingNativeQuery")
+    List<UserDto> getUserDtoUsingNativeQueryRp();
 
     //4. su dung Projection (inteface)
+    UserProjection findUserProjectionByEmail(String email);
 
+    //sap xep va phan trang
 }

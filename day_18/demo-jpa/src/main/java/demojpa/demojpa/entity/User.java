@@ -1,8 +1,27 @@
 package demojpa.demojpa.entity;
 
+import demojpa.demojpa.dto.UserDto;
 import lombok.*;
 
 import javax.persistence.*;
+
+@SqlResultSetMappings(value = {
+        @SqlResultSetMapping(
+                name = "userInfo", // ten ket qua buoc 1
+                classes = @ConstructorResult(
+                        targetClass = UserDto.class,
+                        columns = {
+                                @ColumnResult(name = "id", type = Integer.class),
+                                @ColumnResult(name = "name", type = String.class),
+                                @ColumnResult(name = "email", type=String.class)
+                        }
+                )
+        )
+})
+@NamedNativeQuery(
+        name = "getUserDtoUsingNativeQuery", //dat ten cho cau lenh query su dung trong repo
+        resultSetMapping = "userInfo", // dat ten cho ket qua tra ve
+        query = "select u.id, u.name, u.email from user u") //dinh nghia cau lenh native query
 @Getter
 @Setter
 @NoArgsConstructor

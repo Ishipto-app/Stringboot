@@ -47,8 +47,13 @@ public class TodoService {
         throw new NotFoundException("Not found todo with id = " + id);
     }
     public void deleteTodo(Integer id){
-        todoRepository.deleteById(id);
-        System.out.println("xoa todo " + id);
+        Optional<Todo> todo = todoRepository.findById(id);
+        if(todo.isPresent()){
+            todoRepository.deleteById(id);
+            System.out.println("xoa todo " + id);
+        } else {
+            throw new NotFoundException("Not found todo with id = " + id);
+        }
     }
 }
 
