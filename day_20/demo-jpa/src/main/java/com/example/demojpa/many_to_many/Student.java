@@ -1,4 +1,4 @@
-package demojpa.demojpa.entity;
+package com.example.demojpa.many_to_many;
 
 import lombok.*;
 
@@ -7,24 +7,18 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "student")
-@Builder
-@ToString
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "name", unique = false)
+    @Column(name = "name")
     private String name;
-
-    @Column(name = "age")
-    private int age;
-
-    @Column(name = "email", unique = true)
-    private String email;
 
 }
