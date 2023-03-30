@@ -6,7 +6,7 @@ function CourseItem({course}) {
   return (
     <>
         <div className="col-md-4">
-            <Link to={course.id}>
+            <Link to={'/khoa-hoc/' + course.id}>
                 <div className="course-item shadow-sm rounded mb-4">
                     <div className="course-item-image">
                         <img src="https://media.techmaster.vn/api/static/8028/bpfneoc51co8tcg6lek0"
@@ -20,12 +20,12 @@ function CourseItem({course}) {
                             className="d-flex justify-content-between align-items-center fw-light text-black-50">
                             <p className="type">{course.type}</p>
                             <p className="rating">
-                                <span>3</span>
+                                <span>{course.rating}</span>
                                 <span className="text-warning"><i className="fa-solid fa-star"></i></span>
                             </p>
                         </div>
                         <p className="price text-danger fs-5">
-                            3.000.000 VND
+                            {course.price} VND
                         </p>
                     </div>
                 </div>

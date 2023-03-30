@@ -1,11 +1,9 @@
 import React from 'react'
-import CourseHeader from './CourseHeader'
+import CourseHeader from '../../components/header/CourseHeader'
 
 function CourseDetail() {
   return (
     <>
-        <CourseHeader />
-
         <div className="course-container mt-5">
             <div className="container">
                 <div className="mb-4">

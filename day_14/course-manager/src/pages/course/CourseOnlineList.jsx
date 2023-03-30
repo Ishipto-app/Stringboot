@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import CourseHeader from './CourseHeader'
 import CourseItem from './CourseItem'
 import CourseSearchText from './CourseSearchText'
 import CourseSidebar from './CourseSidebar'
 import axios from 'axios';
-
 const API_URL = "http://localhost:8080/api/v1/courses"
 
-function CourseOnlabList() {
+function CourseOnlineList() {
     
     const [courses, setCourses] = useState([]);
-    const [topic, setTopic] = useState("");
+    const [category, setCategory] = useState("");
     const [name, setName] = useState("");
-    const [type, setType] = useState("Phòng Lab");
+    const [type, setType] = useState("Online");
 
     useEffect(() => {
         const getAllCourses = async () => {
@@ -27,18 +25,18 @@ function CourseOnlabList() {
         getAllCourses();
       }, []);
 
-    const filterByTopic = async value => {
-        setTopic(value);
+    const filterByCategory = async value => {
+        setCategory(value);
         filterCourses(type, name, value);
     }
     const filterByName = value => {
         setName(value);
-        filterCourses(type, value, topic);
+        filterCourses(type, value, category);
     }
-    const filterCourses = async (type, name, topic) => {
+    const filterCourses = async (type, name, category) => {
         let str = API_URL
-        if(type || name || topic){
-            str += "?" + (type ? "type=" + type : "") + (name ? ((type ? "&" : "") + "name=" + name) : "") + (topic ? (((type || name) ? "&" : "") + "topic=" + topic) : "")
+        if(type || name || category){
+            str += "?" + (type ? "type=" + type : "") + (name ? ((type ? "&" : "") + "name=" + name) : "") + (category ? (((type || name) ? "&" : "") + "category=" + category) : "")
         }
         try {
             let rs = await axios.get(str);
@@ -50,15 +48,15 @@ function CourseOnlabList() {
     }
   return (
     <>
-        <CourseHeader />
 
         <div className="course-container mt-5">
             <div className="container">
                 <div className="row">
-                    <CourseSidebar topic={topic} onTopicChange={filterByTopic} />
+                    <CourseSidebar category={category} onCategoryChange={filterByCategory} />
 
                     <div className="col-md-9">
                         <CourseSearchText name={name} onTextFilterChange={filterByName}/>
+                            
                         <div className="course-list row">
                             {courses.map((course, index) => (
                                 <CourseItem key={course.id} course={course} />
@@ -72,4 +70,4 @@ function CourseOnlabList() {
   )
 }
 
-export default CourseOnlabList
+export default CourseOnlineList
