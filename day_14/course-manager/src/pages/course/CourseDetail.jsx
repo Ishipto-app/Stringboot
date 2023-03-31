@@ -1,5 +1,4 @@
 import React from 'react'
-import CourseHeader from '../../components/header/CourseHeader'
 
 function CourseDetail() {
   return (

@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,14 +32,14 @@ public class CourseAdminService {
         //kiem tra null param
         page = page == null ? 1 : page;
         pageSize = pageSize == null ? 10 : pageSize;
-        Page<Course> courses = courseAdminRepository.findAll(PageRequest.of(page, pageSize));
+        Page<Course> courses = courseAdminRepository.findAll(PageRequest.of(page - 1, pageSize));
         return CourseListMapper.courseListDto(page, pageSize, courses);
     }
 
     public Course createCourse(CreateCourseRequest request) {
-        Optional<User> user = userRepository.findById(request.getUserId());
-        List<Category> categories = categoryRepository.findAllById(request.getCategories());
-        if(user.isPresent()) {
+//        Optional<User> user = userRepository.findById(request.getUserId());
+//        List<Category> categories = categoryRepository.findAllById(request.getCategories());
+//        if(user.isPresent()) {
             Course course = Course.builder()
                     .name(request.getName())
                     .description(request.getDescription())
@@ -48,25 +47,25 @@ public class CourseAdminService {
                     .thumbnail(request.getThumbnail())
                     .price(request.getPrice())
                     .rating(request.getRating())
-                    .user(user.get())
-                    .categories(categories)
+                    .user(request.getUser())
+                    .categories(request.getCategories())
                     .build();
             return courseAdminRepository.save(course);
-        } else {
-            throw new NotFoundException("Not found user with id = " + request.getUserId());
-        }
+//        } else {
+//            throw new NotFoundException("Not found user with id = " + request.getUserId());
+//        }
     }
 
     public Course updateCourse(Integer id, UpdateCourseRequest request) {
         Optional<Course> course = courseAdminRepository.findById(id);
-        Optional<User> user = userRepository.findById(request.getUserId());
-        List<Category> categories = categoryRepository.findAllById(request.getCategories());
-        if(user.isEmpty()) {
-            throw new NotFoundException("Not found user with id = " + request.getUserId());
-        }
-        if(course.isEmpty()) {
-            throw new NotFoundException("Not found course with id = " + id);
-        }
+//        Optional<User> user = userRepository.findById(request.getUserId());
+//        List<Category> categories = categoryRepository.findAllById(request.getCategories());
+//        if(user.isEmpty()) {
+//            throw new NotFoundException("Not found user with id = " + request.getUserId());
+//        }
+//        if(course.isEmpty()) {
+//            throw new NotFoundException("Not found course with id = " + id);
+//        }
         Course newCourse = course.get();
         newCourse.setName(request.getName());
         newCourse.setName(request.getName());
@@ -75,12 +74,27 @@ public class CourseAdminService {
         newCourse.setThumbnail(request.getThumbnail());
         newCourse.setPrice(request.getPrice());
         newCourse.setRating(request.getRating());
-        newCourse.setUser(user.get());
-        newCourse.setCategories(categories);
+        newCourse.setUser(request.getUser());
+        newCourse.setCategories(request.getCategories());
         return courseAdminRepository.save(newCourse);
     }
 
     public void deleteCourse(Integer id) {
         courseAdminRepository.deleteById(id);
+    }
+
+    public Course getCourseById(Integer id) {
+        Optional<Course> course = courseAdminRepository.findById(id);
+        if(course.isEmpty()) {
+            throw new NotFoundException("Not found user with id = " + id);
+        }
+        return course.get();
+    }
+    public List<Category> getAllCategories(){
+        return categoryRepository.findAll();
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

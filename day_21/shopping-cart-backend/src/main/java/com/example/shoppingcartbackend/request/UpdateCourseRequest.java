@@ -1,5 +1,7 @@
 package com.example.shoppingcartbackend.request;
 
+import com.example.shoppingcartbackend.entity.Category;
+import com.example.shoppingcartbackend.entity.User;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -23,6 +25,6 @@ public class UpdateCourseRequest {
     private Integer price;
     private Double rating;
     @NotNull(message = "User không được để trống")
-    private Integer userId;
-    private List<Integer> categories;
+    private User user;
+    private List<Category> categories;
 }
