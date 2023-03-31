@@ -9,6 +9,7 @@ import { useGetAllUserQuery } from '../../app/serivce/userService';
 import Select from 'react-select';
 
 function CourseUpdate() {
+    const navigate = useNavigate();
     const {id} = useParams();
     //const [options, setOptions] = useState([])
     // const [course, setCourse] = useState({
@@ -27,8 +28,6 @@ function CourseUpdate() {
     const {data: userData} = useGetAllUserQuery();
 
     const [updateData, { isLoading: isUpdating, isError: isUpdateError, error: updateError }] = useUpdateCourseMutation();
-
-    //const navigate = useNavigate();
 
     const changeCategoryToOption = (categories) => {
         return categories.map((category) => ({
@@ -50,6 +49,8 @@ function CourseUpdate() {
             .unwrap()
             .then(() => {
                 alert("xoa thanh cong");
+                //chuyen huong
+                navigate("/admin/khoa-hoc/")
             })
             .catch(err => alert("xoa error"));
     }
@@ -129,7 +130,7 @@ function CourseUpdate() {
                             </Link>
                         </div>
                         <div>
-                            <button className="btn-custom btn-delete-course bg-danger" onClick={() => handDelete(data.data.id)}>
+                            <button className="btn-custom btn-delete-course bg-danger" type="button" onClick={() => handDelete(id)}>
                                 <span><i className="fa-solid fa-trash-can"></i></span>
                                 Xóa
                             </button>
