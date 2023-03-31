@@ -63,9 +63,9 @@ public class CourseAdminService {
 //        if(user.isEmpty()) {
 //            throw new NotFoundException("Not found user with id = " + request.getUserId());
 //        }
-//        if(course.isEmpty()) {
-//            throw new NotFoundException("Not found course with id = " + id);
-//        }
+        if(course.isEmpty()) {
+            throw new NotFoundException("Not found course with id = " + id);
+        }
         Course newCourse = course.get();
         newCourse.setName(request.getName());
         newCourse.setName(request.getName());
@@ -80,6 +80,10 @@ public class CourseAdminService {
     }
 
     public void deleteCourse(Integer id) {
+        Optional<Course> course = courseAdminRepository.findById(id);
+        if(course.isEmpty()) {
+            throw new NotFoundException("Not found course with id = " + id);
+        }
         courseAdminRepository.deleteById(id);
     }
 

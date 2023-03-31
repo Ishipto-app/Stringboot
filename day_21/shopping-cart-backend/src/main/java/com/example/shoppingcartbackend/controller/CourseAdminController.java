@@ -52,12 +52,12 @@ public class CourseAdminController {
         courseAdminService.deleteCourse(id);
     }
 
-    // api/v1/admin/category}
+    // api/v1/admin/category
     @GetMapping("category")
     public List<Category> getAllCategories(){
         return courseAdminService.getAllCategories();
     }
-    // api/v1/admin/user}
+    // api/v1/admin/user
     @GetMapping("user")
     public List<User> getAllUsers(){
         return courseAdminService.getAllUsers();
