@@ -11,7 +11,7 @@ import Select from 'react-select';
 function CourseUpdate() {
     const navigate = useNavigate();
     const {id} = useParams();
-    //const [options, setOptions] = useState([])
+    const [options, setOptions] = useState([])
     // const [course, setCourse] = useState({
     //     id: "",
     //     name: "",
@@ -69,14 +69,13 @@ function CourseUpdate() {
         mode: "all"
     });
 
-    let options = [];
-    if(categoryData && categoryData.length > 0){
-        options = changeCategoryToOption(categoryData);
-    }
+    useEffect(() => {
+        if(categoryData) setOptions(changeCategoryToOption(categoryData));
+    }, [categoryData]);
 
     useEffect(() => {
         //cho load du lieu de set data vao form
-        if(courseData && userData && categoryData){
+        if(courseData && userData){
             setValue('name', courseData.name);
             setValue('description', courseData.description);
             setValue('type', courseData.type);
@@ -86,7 +85,7 @@ function CourseUpdate() {
             setValue('rating', courseData.rating);
             setValue('user', courseData.user.id);
         }
-    }, [courseData, userData, categoryData, setValue]);
+    }, [courseData, userData, setValue]);
 
     const onSubmitCourse = async data => {
         let newData = {...data}
