@@ -12,7 +12,7 @@ import { Controller } from "react-hook-form";
 import Select from 'react-select';
 
 import useFetchQuery from './hooks/useFetchQuery';
-import useCreate from './hooks/useCreate';
+import useUpdate from './hooks/useUpdate';
 
 function CourseUpdate() {
     const navigate = useNavigate();
@@ -20,9 +20,7 @@ function CourseUpdate() {
     const { categories, users, isLoading: loadItem } = useFetchQuery();
     const {data: courseData, isLoading, isError, error} = useGetCourseByIdQuery(id);
 
-    const [updateData, { isLoading: isUpdating, isError: isUpdateError, error: updateError }] = useUpdateCourseMutation();
-
-    const { control, register, handleSubmit, errors, setValue } = useCreate();
+    const { control, register, handleSubmit, errors, setValue, onUpdateCourse } = useUpdate(id);
 
     const categoryOptions = getCategoryOptions(categories);
     const userOptions = getUserOptions(users);
@@ -56,22 +54,6 @@ function CourseUpdate() {
         }
     }, [courseData, setValue]);
 
-    const onSubmitCourse = data => {
-        let newData = {...data}
-        newData.categories = categories.filter(a => data.categoryIds.includes(a.id));
-        newData.user = users.find(user => user.id == newData.userId);
-        newData.id = id;
-        console.log(newData)
-        updateData(newData)
-            .unwrap()
-            .then((res) => {
-                alert("update success")
-            })
-            .catch(err => {
-                console.error(err)
-                alert('create error')
-            });
-    }
 
     if(isLoading) {
         return <h2>Loading...</h2>
@@ -80,15 +62,11 @@ function CourseUpdate() {
         console.error(error)
         return <h2>Error</h2>
     }
-    if(isUpdateError){
-        console.error(updateError)
-        return <h2>Error</h2>
-    }
   return (
     <>
         <div className="course-list mt-4 mb-4">
             <div className="container">
-                <form onSubmit={handleSubmit(onSubmitCourse)}>
+                <form onSubmit={handleSubmit(onUpdateCourse)}>
                     <div className="mb-4 d-flex justify-content-between">
                         <div>
                             <button className="btn-custom btn-update-course" type="submit">
@@ -193,6 +171,11 @@ function CourseUpdate() {
                                             />
                                         )}
                                     />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="course-price" className="form-label fw-bold">Price</label>
+                                    <input type="number" className="form-control" id="course-price" {...register("price")} />
+                                    <p className='text-danger'>{errors.description?.price}</p>
                                 </div>
 
                                 <div className="mb-3">

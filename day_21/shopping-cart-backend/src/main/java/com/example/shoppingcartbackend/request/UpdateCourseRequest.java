@@ -25,6 +25,9 @@ public class UpdateCourseRequest {
     private Integer price;
     private Double rating;
     @NotNull(message = "User không được để trống")
-    private User user;
-    private List<Category> categories;
+    //private User user;
+    private Integer userId;
+
+    //private List<Category> categories;
+    private List<Integer> categoryIds;
 }

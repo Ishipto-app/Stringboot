@@ -11,38 +11,17 @@ import {
     getUserOptions,
 } from "./options/options";
 
-import { useNavigate } from 'react-router-dom'
-import { useCreateCourseMutation } from '../../app/serivce/courseService';
-
 function CourseCreate() {
     const navigate = useNavigate();
 
     const { categories, users, isLoading } = useFetchQuery();
-    
-    const [createData, { isLoading: isCreating, isError: isCreateError, error: createError }] = useCreateCourseMutation();
-    
-    const { control, register, handleSubmit, errors, setValue } = useCreate();
+   
+    const { control, register, handleSubmit, errors, onCreateCourse } = useCreate();
 
     const categoryOptions = getCategoryOptions(categories);
     const userOptions = getUserOptions(users);
     const typeOptions = getTypeOptions();
 
-    const onCreateCourse = (data) => {
-        let newData = {...data}
-        newData.categories = categories.filter(a => data.categoryIds.includes(a.id));
-        newData.user = users.find(user => user.id == newData.userId);
-        createData(newData)
-            .unwrap()
-            .then((res) => {
-                alert("create success")
-                //chuyen huong
-                navigate("/admin/khoa-hoc/" + res.id)
-            })
-            .catch(err => {
-                console.error(err)
-                alert('create error')
-            });
-    }
     if (isLoading) {
         return <h2>Loading ...</h2>;
     }
@@ -105,7 +84,6 @@ function CourseCreate() {
                                     <Controller
                                         name="categoryIds"
                                         control={control}
-                                        defaultValue={1}
                                         render={({
                                             field: { onChange, value, ref },
                                         }) => (
@@ -147,6 +125,12 @@ function CourseCreate() {
                                             />
                                         )}
                                     />
+                                </div>
+                                
+                                <div className="mb-3">
+                                    <label htmlFor="course-price" className="form-label fw-bold">Price</label>
+                                    <input type="number" className="form-control" id="course-price" {...register("price")} />
+                                    <p className='text-danger'>{errors.description?.price}</p>
                                 </div>
                             </div>
                         </div>

@@ -37,29 +37,25 @@ public class CourseAdminService {
     }
 
     public Course createCourse(CreateCourseRequest request) {
-//        Optional<User> user = userRepository.findById(request.getUserId());
-//        List<Category> categories = categoryRepository.findAllById(request.getCategories());
-//        if(user.isPresent()) {
-            Course course = Course.builder()
-                    .name(request.getName())
-                    .description(request.getDescription())
-                    .type(request.getType())
-                    .thumbnail(request.getThumbnail())
-                    .price(request.getPrice())
-                    .rating(request.getRating())
-                    .user(request.getUser())
-                    .categories(request.getCategories())
-                    .build();
-            return courseAdminRepository.save(course);
-//        } else {
-//            throw new NotFoundException("Not found user with id = " + request.getUserId());
-//        }
+        User user = userRepository.findById(request.getUserId()).orElseThrow();
+        List<Category> categories = categoryRepository.findAllById(request.getCategoryIds());
+        Course course = Course.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .type(request.getType())
+                .thumbnail(request.getThumbnail())
+                .price(request.getPrice())
+                .rating(request.getRating())
+                .user(user)
+                .categories(categories)
+                .build();
+        return courseAdminRepository.save(course);
     }
 
     public Course updateCourse(Integer id, UpdateCourseRequest request) {
         Optional<Course> course = courseAdminRepository.findById(id);
-//        Optional<User> user = userRepository.findById(request.getUserId());
-//        List<Category> categories = categoryRepository.findAllById(request.getCategories());
+        User user = userRepository.findById(request.getUserId()).orElseThrow();
+        List<Category> categories = categoryRepository.findAllById(request.getCategoryIds());
 //        if(user.isEmpty()) {
 //            throw new NotFoundException("Not found user with id = " + request.getUserId());
 //        }
@@ -74,8 +70,8 @@ public class CourseAdminService {
         newCourse.setThumbnail(request.getThumbnail());
         newCourse.setPrice(request.getPrice());
         newCourse.setRating(request.getRating());
-        newCourse.setUser(request.getUser());
-        newCourse.setCategories(request.getCategories());
+        newCourse.setUser(user);
+        newCourse.setCategories(categories);
         return courseAdminRepository.save(newCourse);
     }
 

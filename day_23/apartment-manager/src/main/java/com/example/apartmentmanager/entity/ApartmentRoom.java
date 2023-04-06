@@ -26,8 +26,4 @@ public class ApartmentRoom {
     @Column(name = "room")
     private Long room;
 
-    @ManyToOne
-    @JoinColumn(name = "apartment_general_cost_id")
-    private ApartmentGeneralCost apartmentGeneraCost;
-
 }

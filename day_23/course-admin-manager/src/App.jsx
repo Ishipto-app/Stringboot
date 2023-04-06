@@ -3,6 +3,7 @@ import Layout from "./components/layout/Layout";
 import CourseCreate from "./pages/course/CourseCreate";
 import CourseUpdate from "./pages/course/CourseUpdate";
 import CourseList from "./pages/course/CourseList";
+import NotFound from "./pages/NotFound";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                         <Route path=":id" element={<CourseUpdate />} />
                     </Route>
                 </Route>
+        <       Route path="*" element={<NotFound />}></Route>
             </Routes>
         </>
     );

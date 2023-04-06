@@ -27,7 +27,9 @@ public class CreateCourseRequest {
     private Integer price;
     private Double rating;
     @NotNull(message = "User không được để trống")
-    private User user;
+    //private User user;
+    private Integer userId;
 
-    private List<Category> categories;
+    //private List<Category> categories;
+    private List<Integer> categoryIds;
 }

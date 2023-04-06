@@ -5,7 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -29,7 +31,10 @@ public class ApartmentGeneralCost {
     @Column(name = "total")
     private Long total;
 
-    @OneToMany(mappedBy = "apartmentGeneraCost", orphanRemoval = true)
-    private List<ApartmentRoom> apartmentRooms = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "apartment_genera_cost_apartment_rooms",
+            joinColumns = @JoinColumn(name = "apartment_general_cost_id"),
+            inverseJoinColumns = @JoinColumn(name = "apartment_rooms_id"))
+    private Set<ApartmentRoom> apartmentRooms = new LinkedHashSet<>();
 
 }
