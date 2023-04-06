@@ -1,46 +1,34 @@
 import React, {useEffect, useState} from 'react'
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useGetCourseByIdQuery, useDeleteCourseMutation, useUpdateCourseMutation } from '../../app/serivce/courseService';
-import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
-import { useGetAllCategoryQuery } from '../../app/serivce/categoryService';
-import { useGetAllUserQuery } from '../../app/serivce/userService';
+
+import {
+    getCategoryOptions,
+    getTypeOptions,
+    getUserOptions,
+} from "./options/options";
+
+import { Controller } from "react-hook-form";
 import Select from 'react-select';
+
+import useFetchQuery from './hooks/useFetchQuery';
+import useCreate from './hooks/useCreate';
 
 function CourseUpdate() {
     const navigate = useNavigate();
     const {id} = useParams();
-    const [options, setOptions] = useState([])
-    // const [course, setCourse] = useState({
-    //     id: "",
-    //     name: "",
-    //     description: "",
-    //     type: "",
-    //     categories: "",
-    //     thumbnail: "",
-    //     price: "",
-    //     rating: "",
-    //     user: "",
-    // });
+    const { categories, users, isLoading: loadItem } = useFetchQuery();
     const {data: courseData, isLoading, isError, error} = useGetCourseByIdQuery(id);
-    const {data: categoryData} = useGetAllCategoryQuery();
-    const {data: userData} = useGetAllUserQuery();
 
     const [updateData, { isLoading: isUpdating, isError: isUpdateError, error: updateError }] = useUpdateCourseMutation();
 
-    const changeCategoryToOption = (categories) => {
-        return categories.map((category) => ({
-            value: category.id,
-            label: category.name,
-        }))
-    }
-    const changeSelectOptionToCategory = (selectOptions) => {
-        return selectOptions.map((item) => ({
-            id: item.value,
-            name: item.label,
-        }))
-    }
+    const { control, register, handleSubmit, errors, setValue } = useCreate();
+
+    const categoryOptions = getCategoryOptions(categories);
+    const userOptions = getUserOptions(users);
+    const typeOptions = getTypeOptions();
+
+    console.log(categoryOptions)
     
     const [deleteCourse] = useDeleteCourseMutation()
 
@@ -55,49 +43,34 @@ function CourseUpdate() {
             .catch(err => alert("xoa error"));
     }
       
-    const schema = yup.object({
-        name: yup.string().required("Ten khong duoc de trong"),
-        description: yup.string()
-            .min(50, "Mo ta co it nhat 50 ky tu")
-            .required("Mo ta khong duoc de trong"),
-        type: yup.string().required("type khong duoc de trong"),
-        user: yup.string().required("User khong duoc de trong"),
-    }).required();
-      
-    const { register, handleSubmit, formState:{ errors }, setValue } = useForm({
-        resolver: yupResolver(schema),
-        mode: "all"
-    });
-
     useEffect(() => {
-        if(categoryData) setOptions(changeCategoryToOption(categoryData));
-    }, [categoryData]);
-
-    useEffect(() => {
-        //cho load du lieu de set data vao form
-        if(courseData && userData){
+        if(courseData){
             setValue('name', courseData.name);
             setValue('description', courseData.description);
             setValue('type', courseData.type);
-            setValue('categories', changeCategoryToOption(courseData.categories));
+            setValue('categoryIds', courseData.categories.map(a => a.id));
             setValue('thumbnail', courseData.thumbnail);
             setValue('price', courseData.price);
             setValue('rating', courseData.rating);
-            setValue('user', courseData.user.id);
+            setValue('userId', courseData.user.id);
         }
-    }, [courseData, userData, setValue]);
+    }, [courseData, setValue]);
 
-    const onSubmitCourse = async data => {
+    const onSubmitCourse = data => {
         let newData = {...data}
-        if(newData.categories) newData.categories = changeSelectOptionToCategory(data.categories)
-        newData.user = userData.find(user => user.id == newData.user);
+        newData.categories = categories.filter(a => data.categoryIds.includes(a.id));
+        newData.user = users.find(user => user.id == newData.userId);
         newData.id = id;
+        console.log(newData)
         updateData(newData)
             .unwrap()
-            .then((data) => {
+            .then((res) => {
                 alert("update success")
             })
-            .catch(err => alert('update error'));
+            .catch(err => {
+                console.error(err)
+                alert('create error')
+            });
     }
 
     if(isLoading) {
@@ -105,15 +78,14 @@ function CourseUpdate() {
     }
     if(isError){
         console.error(error)
-        //return <h2>Error: {error}</h2>
+        return <h2>Error</h2>
     }
     if(isUpdateError){
         console.error(updateError)
-        //return <h2>Error: {updateError}</h2>
+        return <h2>Error</h2>
     }
   return (
     <>
-        {courseData && userData && categoryData &&
         <div className="course-list mt-4 mb-4">
             <div className="container">
                 <form onSubmit={handleSubmit(onSubmitCourse)}>
@@ -153,32 +125,74 @@ function CourseUpdate() {
                             <div className="col-md-4">
                                 <div className="mb-3">
                                     <label htmlFor="course-type" className="form-label fw-bold">Hình thức học</label>
-                                    <select className="form-control" id="course-type" {...register("type")}>
-                                        <option hidden value="">- Chọn hình thức học</option>
-                                        <option value="online">Online</option>
-                                        <option value="onlab">Onlab</option>
-                                    </select>
+                                    <Controller
+                                        name="type"
+                                        control={control}
+                                        defaultValue={courseData?.type}
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                placeholder="-- Chọn hình thức học --"
+                                                options={typeOptions}
+                                                value={typeOptions.find(
+                                                    (c) =>
+                                                        c.value === field.value
+                                                )}
+                                                onChange={(val) =>
+                                                    field.onChange(val.value)
+                                                }
+                                            />
+                                        )}
+                                    />
                                     <p className='text-danger'>{errors.type?.message}</p>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="course-topic" className="form-label fw-bold">Chủ đề</label>
-                                    <Select
-                                        isMulti
-                                        name="categories"
-                                        {...register("categories")}
-                                        defaultValue={options.filter(item => (courseData.categories.map(category => category.id)).includes(item.value))}
-                                        options={options}
-                                        onChange={e => setValue('categories', e)}
+                                    <Controller
+                                        name="categoryIds"
+                                        control={control}
+                                        render={({
+                                            field: { onChange, value, ref },
+                                        }) => (
+                                            <Select
+                                                placeholder="-- Chọn danh mục --"
+                                                inputRef={ref}
+                                                value={categoryOptions.find(
+                                                    (c) => c.value === value
+                                                )}
+                                                defaultValue={categoryOptions.filter(item => (courseData.categories.map(category => category.id)).includes(item.value))}
+                                                onChange={(val) =>
+                                                    onChange(
+                                                        val.map((c) => c.value)
+                                                    )
+                                                }
+                                                options={categoryOptions}
+                                                isMulti
+                                            />
+                                        )}
                                     />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="course-supporter" className="form-label fw-bold">Tư vấn viên</label>
-                                    <select className="form-control" id="course-supporter" {...register("user")}>
-                                        <option hidden value="">- Chọn tư vấn viên</option>
-                                        {userData && userData.map(user => (
-                                            <option key={user.id} value={user.id}>{user.name}</option>
-                                        ))}
-                                    </select>
+                                    <Controller
+                                        name="userId"
+                                        control={control}
+                                        defaultValue={courseData?.user?.id}
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                placeholder="-- Chọn nhân viên tư vấn --"
+                                                options={userOptions}
+                                                value={userOptions.find(
+                                                    (c) =>
+                                                        c.value === field.value
+                                                )}
+                                                onChange={(val) =>
+                                                    field.onChange(val.value)
+                                                }
+                                            />
+                                        )}
+                                    />
                                 </div>
 
                                 <div className="mb-3">
@@ -196,7 +210,6 @@ function CourseUpdate() {
                 </form>
             </div>
         </div>
-        }
     </>
   )
 }
