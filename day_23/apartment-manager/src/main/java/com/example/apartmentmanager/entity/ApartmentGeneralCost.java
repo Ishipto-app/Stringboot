@@ -31,10 +31,5 @@ public class ApartmentGeneralCost {
     @Column(name = "total")
     private Long total;
 
-    @ManyToMany
-    @JoinTable(name = "apartment_genera_cost_apartment_rooms",
-            joinColumns = @JoinColumn(name = "apartment_general_cost_id"),
-            inverseJoinColumns = @JoinColumn(name = "apartment_rooms_id"))
-    private Set<ApartmentRoom> apartmentRooms = new LinkedHashSet<>();
 
 }

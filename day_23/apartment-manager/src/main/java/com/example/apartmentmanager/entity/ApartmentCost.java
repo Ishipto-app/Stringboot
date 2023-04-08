@@ -39,12 +39,4 @@ public class ApartmentCost {
     @Column(name = "pay_status")
     private Boolean pay_status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "apartment_room_id")
-    private ApartmentRoom apartmentRoom;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
 }

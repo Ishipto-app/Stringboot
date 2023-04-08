@@ -24,12 +24,5 @@ public class ApartmentTracking {
     @Column(name = "time_out")
     private String time_out;
 
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "apartment_room_id")
-    private ApartmentRoom apartmentRoom;
-
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "user_id")
-    private User user;
 
 }

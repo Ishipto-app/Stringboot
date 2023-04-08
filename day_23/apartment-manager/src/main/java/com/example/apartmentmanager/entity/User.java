@@ -3,6 +3,10 @@ package com.example.apartmentmanager.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -34,9 +38,5 @@ public class User {
 
     @Column(name = "deputy")
     private Boolean deputy;
-
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "apartment_room_id")
-    private ApartmentRoom apartmentRoom;
 
 }
