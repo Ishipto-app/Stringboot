@@ -107,12 +107,12 @@ Ngoài ra UserDetails có thể được tùy chỉnh (customize) bổ sung thê
 
 ## Câu 2
 Dựa vào hiểu biết của em. Hãy trình bày sơ lược về workflow trong Spring Security
-- Người dùng gửi request thông tin tên, mật khẩu(username, password) => thông qua SecurityFilterChain tạo ra Object UserNamePasswordAuthenticationToken(chưa xác thực) để lưu trữ thông tin.
+- Người dùng gửi request thông tin tên, mật khẩu(username, password) => thông qua SecurityFilterChain tạo ra Object UserNamePasswordAuthenticationToken để lưu trữ thông tin.
 - UserNamePasswordAuthenticationToken => chuyển vào AuthenticationManager => tìm tới AuthenticationProvider tương ứng
 - AuthenticationProvider sử dụng UserDetailsService lấy ra các thông tin liên quan đến User (có tên = tên (username) được gửi lên) trong database
-- Các thông tin User được build thành 1 mẫu Object UserService (có thể tùy chỉnh thêm các thông tin khác ngoài tên, mật khấu lấy được từ database). 
+- Các thông tin của User được build thành 1 mẫu Object UserService (có thể tùy chỉnh thêm các thông tin khác ngoài tên, mật khấu lấy được từ database). 
   - Nếu không tồn tại User thì ném ra ngoại lệ UsernameNotFoundException 
-- Sử dụng PasswordEncoder để mã hóa mật khẩu gửi lên (UserNamePasswordAuthenticationToken) và so sánh với thông tin mật khẩu đã được mã hóa trong UserDetail
+- Sử dụng PasswordEncoder để mã hóa mật khẩu gửi lên (UserNamePasswordAuthenticationToken) và so sánh với thông tin mật khẩu đã được mã hóa trong UserDetail lấy từ database.
 - Trường hợp mật khẩu phù hợp thì trả về 1 Object Authentication đã xác thực (chửa Object UserDetail kem theo các thông tin tùy chỉnh) lưu vào SecurityContextHolder. 
   - Xác thực không thành công trả về lỗi 401
 - Tiếp tục kiểm tra Authentication có quyền thực hiện request không qua Authorities - mảng các quyền. 
