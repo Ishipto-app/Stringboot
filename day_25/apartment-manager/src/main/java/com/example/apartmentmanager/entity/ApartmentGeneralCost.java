@@ -2,7 +2,7 @@ package com.example.apartmentmanager.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -31,4 +31,6 @@ public class ApartmentGeneralCost {
     @Column(name = "total")
     private Long total;
 
+    @ManyToMany(mappedBy = "apartmentGeneralCosts")
+    private List<ApartmentRoom> apartmentRooms;
 }

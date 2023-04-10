@@ -2,7 +2,7 @@ package com.example.apartmentmanager.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -30,4 +30,17 @@ public class ApartmentRoom {
     @Column(name = "room")
     private Long room;
 
+    @OneToMany(mappedBy = "apartmentRoom")
+    private List<ApartmentCost> apartmentCosts;
+
+    @ManyToMany
+    @JoinTable(
+            name = "apartment_room_general_cost",
+            joinColumns = @JoinColumn(name = "apartment_room_id"),
+            inverseJoinColumns = @JoinColumn(name = "apartment_general_cost_id")
+    )
+    private List<ApartmentGeneralCost> apartmentGeneralCosts;
+
+    @OneToMany(mappedBy = "apartmentRoom")
+    private List<ApartmentTracking> apartmentTrackings;
 }
