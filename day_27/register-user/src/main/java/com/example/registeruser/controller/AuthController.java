@@ -1,16 +1,11 @@
 package com.example.registeruser.controller;
 
-import com.example.registeruser.entity.User;
 import com.example.registeruser.request.RegisterRequest;
 import com.example.registeruser.service.AuthService;
-import com.example.registeruser.service.CustomUserDetailsSerivce;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

@@ -5,15 +5,11 @@ import com.example.registeruser.entity.User;
 import com.example.registeruser.repository.TokenConfirmRepository;
 import com.example.registeruser.repository.UserRepository;
 import com.example.registeruser.request.RegisterRequest;
-import com.example.registeruser.security.JwtUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +29,6 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtUtils jwtUtils;
 
     public String register(RegisterRequest request) {
         Optional<User> optional = userRepository.findByEmail(request.getEmail());
