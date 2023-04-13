@@ -103,7 +103,7 @@ public class AuthService {
                 }
             }
         } else {
-            throw new RuntimeException("Token không tồn tại");
+            return "Token không tồn tại";
         }
     }
 }
