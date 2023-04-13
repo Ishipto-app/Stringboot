@@ -6,13 +6,18 @@ import com.example.registeruser.repository.TokenConfirmRepository;
 import com.example.registeruser.repository.UserRepository;
 import com.example.registeruser.request.RegisterRequest;
 import com.example.registeruser.security.JwtUtils;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -32,37 +37,35 @@ public class AuthService {
     private JwtUtils jwtUtils;
 
     public String register(RegisterRequest request) {
-        //Tìm kiếm user theo email
         Optional<User> optional = userRepository.findByEmail(request.getEmail());
-        if(optional.isPresent()){
+
+        if (optional.isPresent()) {
             User user = optional.get();
             if(user.isEnabled()){
                 //Nếu user đó đã được kích hoạt -> Báo lỗi “Tài khoản đã được đăng ký”
                 throw new RuntimeException("Tài khoản đã được đăng ký");
             } else {
                 //Nếu user chưa được kích hoạt (có name và email trùng với request gửi lên) -> Sinh ra token tương ứng -> Lưu vào bảng Token
-                if(Objects.equals(user.getEmail(), request.getEmail()) && Objects.equals(user.getName(), request.getName())){
+                if(Objects.equals(request.getEmail(), user.getEmail()) && Objects.equals(request.getName(), user.getName())){
                     return saveTokenConfirm(user);
                 } else {
                     throw new RuntimeException("Tài khoản đăng ký name không đúng");
                 }
             }
-
-        } else {
-            //Nếu không tìm thấy user -> Lưu user vào trong database -> Sinh ra token tương ứng -> Lưu vào bảng Token -> Trả về đường dẫn kích hoạt (có thể gửi đường link kích hoạt vào trong email)
-            User newUser = new User(null, request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()), false, new ArrayList<>(), new ArrayList<>());
-            userRepository.save(newUser);
-            //tra ve duong dan kick hoat
-            return saveTokenConfirm(newUser);
         }
+
+        // Create new user's account
+        User newUser = new User(null, request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()), false, new ArrayList<>(), new ArrayList<>());
+        userRepository.save(newUser);
+        //tra ve duong dan kick hoat
+        return saveTokenConfirm(newUser);
+
+
     }
     public String saveTokenConfirm(User user) {
-        // Tạo Object xác thực
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
-        );
-        // Tạo token từ Object trên
-        String jwtToken = jwtUtils.generateJwtToken(authentication);
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+        String jwtToken = Jwts.builder().setSubject(user.getEmail()).signWith(key).compact();
         TokenConfirm tokenConfirm = new TokenConfirm();
         tokenConfirm.setUser(user);
         tokenConfirm.setToken(jwtToken);
@@ -70,7 +73,7 @@ public class AuthService {
         tokenConfirm.setExpiresAt(LocalDateTime.now().plusSeconds(86400000)); // token expires in 1 day
         tokenConfirmRepository.save(tokenConfirm);
         //tra ve duong dan kick hoat
-        return "http://";
+        return "http://localhost:8080/confirm?token=" + jwtToken;
     }
     public String confirm(String token) {
         //Tìm kiếm xem token có tồn tại không
