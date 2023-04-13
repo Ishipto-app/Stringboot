@@ -50,7 +50,9 @@ public class SecurityConfig {
         String[] PUBLIC = {
                 "/",
                 "/login-handle",
-                "/css/**"
+                "/css/**",
+                "/register",
+                "/confirm"
         };
         http
                 .csrf().disable()

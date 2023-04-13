@@ -19,6 +19,6 @@ public class RegisterRequest {
     private String email;
 
     @NotEmpty(message = "password không được để trống")
-    @Size(min = 6, message = "password có độ dài ký tự >= 6")
+    @Size(min = 3, message = "password có độ dài ký tự >= 3")
     private String password;
 }
