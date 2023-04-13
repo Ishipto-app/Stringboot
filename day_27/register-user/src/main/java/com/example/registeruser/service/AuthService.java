@@ -43,13 +43,13 @@ public class AuthService {
             User user = optional.get();
             if(user.isEnabled()){
                 //Nếu user đó đã được kích hoạt -> Báo lỗi “Tài khoản đã được đăng ký”
-                throw new RuntimeException("Tài khoản đã được đăng ký");
+                return "Tài khoản đã được đăng ký";
             } else {
                 //Nếu user chưa được kích hoạt (có name và email trùng với request gửi lên) -> Sinh ra token tương ứng -> Lưu vào bảng Token
                 if(Objects.equals(request.getEmail(), user.getEmail()) && Objects.equals(request.getName(), user.getName())){
                     return saveTokenConfirm(user);
                 } else {
-                    throw new RuntimeException("Tài khoản đăng ký name không đúng");
+                    return "Tài khoản đăng ký name không đúng";
                 }
             }
         }
