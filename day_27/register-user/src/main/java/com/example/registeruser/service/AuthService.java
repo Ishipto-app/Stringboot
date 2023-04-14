@@ -40,10 +40,10 @@ public class AuthService {
                 return "Tài khoản đã được đăng ký";
             } else {
                 //Nếu user chưa được kích hoạt (có name và email trùng với request gửi lên) -> Sinh ra token tương ứng -> Lưu vào bảng Token
-                if(Objects.equals(request.getEmail(), user.getEmail()) && Objects.equals(request.getName(), user.getName())){
+                if(Objects.equals(request.getEmail(), user.getEmail()) && Objects.equals(request.getName(), user.getName() && Objects.equals(request.getPassword(), user.getPassword())){
                     return saveTokenConfirm(user);
                 } else {
-                    return "Tài khoản đăng ký name không đúng";
+                    return "Tài khoản đăng ký name password không đúng";
                 }
             }
         }
