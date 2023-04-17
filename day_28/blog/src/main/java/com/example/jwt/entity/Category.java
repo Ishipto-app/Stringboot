@@ -21,13 +21,12 @@ import lombok.*;
 @NamedNativeQuery(
         name = "findLimitCategories",
         resultSetMapping = "categoryInfo",
-//                "ORDER BY used DESC " +
-//                "LIMIT 5"
         query = "select c.id, c.name, COUNT(b.id) AS used from category c\n" +
-                "left join blog_category bc\n" +
+                "inner join blog_category bc\n" +
                 "on c.id = bc.category_id\n" +
-                "left join blog b\n" +
+                "inner join blog b\n" +
                 "on bc.blog_id = b.id\n" +
+                "where b.status = 1\n" +
                 "group by c.id\n" +
                 "order by used DESC\n" +
                 "limit :limit"

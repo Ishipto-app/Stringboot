@@ -54,11 +54,7 @@ public class SecurityConfig {
         String[] PUBLIC = {
                 "/",
                 "/login-handle",
-                "/api/v1/public/blogs",
-                "/api/v1/public/search",
-                "/api/v1/public/categories",
-                "/api/v1/public/category/top5",
-                "/api/v1/public/category/{categoryName}"
+                "/api/v1/public/**"
         };
         http
                 .csrf().disable()

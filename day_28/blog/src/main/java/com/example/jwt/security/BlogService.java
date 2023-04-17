@@ -1,5 +1,6 @@
 package com.example.jwt.security;
 
+import com.example.jwt.dto.CategoryDto;
 import com.example.jwt.entity.Blog;
 import com.example.jwt.entity.Category;
 import com.example.jwt.repository.BlogRepository;
@@ -32,11 +33,11 @@ public class BlogService {
     }
 
     public List<Blog> getBlogByTitle(String term) {
-        return blogRepository.findByTitleContainsIgnoreCase(term);
+        return blogRepository.findByTitleContainsIgnoreCaseAndStatusTrue(term);
     }
 
     public List<Blog> getBlogByCategory(String categoryName) {
-        return blogRepository.findByCategories_Name(categoryName);
+        return blogRepository.findByCategories_NameAndStatusTrue(categoryName);
     }
 
     public Blog getBlogById(Integer id, String slug) {
@@ -47,4 +48,5 @@ public class BlogService {
             return null;
         }
     }
+
 }
