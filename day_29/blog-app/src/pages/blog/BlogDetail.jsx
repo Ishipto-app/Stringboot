@@ -14,6 +14,15 @@ function BlogDetail() {
   }
   return (
     <main className="main">
+        <ul className="terms-tags">
+            {blog && blog.categories.map(category => (
+                <li key={category.id}>
+                    <Link to={"/categories/" + category.name}>
+                        {category.name}
+                    </Link>
+                </li>
+            ))}
+        </ul>
         <article className="post-single">
             <header className="post-header">
                 <h1 className="post-title">{blog?.title}</h1>
