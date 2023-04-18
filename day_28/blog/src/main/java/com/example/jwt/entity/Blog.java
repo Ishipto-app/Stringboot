@@ -1,6 +1,5 @@
 package com.example.jwt.entity;
 
-import com.example.jwt.dto.CommentDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -62,6 +61,7 @@ public class Blog {
 
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "blog_id")
+    @OrderBy("created_at DESC")
     private List<Comment> comments = new ArrayList<>();
 
 //    @JsonIgnore
