@@ -1,5 +1,6 @@
 package com.example.jwt.controller;
 
+import com.example.jwt.dto.BlogDto;
 import com.example.jwt.dto.CategoryDto;
 import com.example.jwt.entity.Blog;
 import com.example.jwt.security.BlogService;
@@ -52,7 +53,7 @@ public class PublicController {
 
 //    GET : api/v1/public/blogs/{blogId}/{blogSlug}
     @GetMapping("/blogs/{blogId}/{blogSlug}")
-    public Blog getBlogById(@PathVariable Integer blogId, @PathVariable String blogSlug){
+    public BlogDto getBlogById(@PathVariable Integer blogId, @PathVariable String blogSlug){
         return blogService.getBlogById(blogId, blogSlug);
     }
 }

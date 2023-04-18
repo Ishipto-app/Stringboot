@@ -6,7 +6,6 @@ import { useGetAllCategoriesQuery } from '../../app/service/categoryService';
 
 function HomePage() {
     const { data: data, isLoading: isLoadingBlog, isError: isLoadingBlogError, error: loadingBlogError } = useGetAllBlogsQuery();
-    console.log(data)
     const { data: categories, isLoading: isLoadingCategory, isError: isLoadingCategoryError, error: loadingCategoryError } = useGetAllCategoriesQuery();
     
     if(isLoadingBlog || isLoadingCategory) {

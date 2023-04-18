@@ -1,8 +1,10 @@
 package com.example.jwt.security;
 
+import com.example.jwt.dto.BlogDto;
 import com.example.jwt.dto.CategoryDto;
 import com.example.jwt.entity.Blog;
 import com.example.jwt.entity.Category;
+import com.example.jwt.mapper.BlogMapper;
 import com.example.jwt.repository.BlogRepository;
 import com.example.jwt.repository.CategoryRepository;
 import org.springframework.data.domain.Page;
@@ -40,10 +42,11 @@ public class BlogService {
         return blogRepository.findByCategories_NameAndStatusTrue(categoryName);
     }
 
-    public Blog getBlogById(Integer id, String slug) {
+    public BlogDto getBlogById(Integer id, String slug) {
         Optional optional = blogRepository.findByIdAndSlugAndStatusTrue(id, slug);
         if(optional.isPresent()){
-            return (Blog) optional.get();
+            BlogDto blogDto = BlogMapper.toBlogDto((Blog) optional.get());
+            return blogDto;
         } else {
             return null;
         }

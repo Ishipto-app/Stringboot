@@ -1,5 +1,6 @@
 package com.example.jwt.entity;
 
+import com.example.jwt.dto.CommentDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -59,9 +60,14 @@ public class Blog {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY)
-    private List<Comment> comments;
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn(name = "blog_id")
+    private List<Comment> comments = new ArrayList<>();
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY)
+//    private List<Comment> comments;
+
 
     @PrePersist
     public void prePersist() {

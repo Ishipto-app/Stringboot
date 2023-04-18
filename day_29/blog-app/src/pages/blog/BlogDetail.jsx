@@ -31,6 +31,27 @@ function BlogDetail() {
             </header>
             <div className="post-content">
                 <p>{blog?.content}</p>
+                <h4>Create by: {blog?.user?.name}</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Comment</th>
+                            <th>Create by</th>
+                            <th>Create at</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {blog?.comments && blog.comments.map((comment, index) => (
+                            <tr key={comment.id}>
+                                <td>{index + 1}</td>
+                                <td>{comment.content}</td>
+                                <td>{comment.user.name}</td>
+                                <td>{comment.createdAt}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </article>
     </main>
