@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom";
-import { useGetCategoryByNameQuery } from '../../app/service/categoryService';
+import { useGetCategoryByNameQuery } from '../../app/apis/categoryApi';
 
 function CategoryDetail() {
     const {categoryName} = useParams();
@@ -36,7 +36,7 @@ function CategoryDetail() {
                         </p>
                     </div>
                     <footer className="entry-footer">
-                        <span>{blog?.pulishedAt}</span>
+                        <span>{blog ? new Date(...blog.publishedAt).toLocaleDateString() : null}</span>
                     </footer>
                     <Link
                         className="entry-link"

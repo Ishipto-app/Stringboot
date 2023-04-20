@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { categoryApi } from './service/categoryService'
-import { blogApi } from './service/blogService'
+import { categoryApi } from './apis/categoryApi'
+import { blogApi } from './apis/blogApi'
 
 export const store = configureStore({
   reducer: {

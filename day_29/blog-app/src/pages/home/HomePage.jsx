@@ -1,8 +1,8 @@
 import React from 'react'
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { useGetAllBlogsQuery } from '../../app/service/blogService';
-import { useGetAllCategoriesQuery } from '../../app/service/categoryService';
+import { useGetAllBlogsQuery } from '../../app/apis/blogApi';
+import { useGetAllCategoriesQuery } from '../../app/apis/categoryApi';
 
 function HomePage() {
     const { data: data, isLoading: isLoadingBlog, isError: isLoadingBlogError, error: loadingBlogError } = useGetAllBlogsQuery();
@@ -49,7 +49,7 @@ function HomePage() {
                         </p>
                     </div>
                     <footer className="entry-footer">
-                        <span>{blog?.pulishedAt}</span>
+                        <span>{blog.publishedAt ? new Date(...blog.publishedAt).toLocaleDateString() : null}</span>
                     </footer>
                     <Link
                             className="entry-link"
