@@ -8,7 +8,6 @@ const defaultState = {
     isAuthenticated: false
 }
 const initialState = getData("authBlog") ? getData("authBlog") : defaultState;
-console.log(getData("authBlog"))
 // const initialState = {
 //     auth: null,
 //     token: null,

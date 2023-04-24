@@ -10,12 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/admin")
 public class CategoryAdminController {
     @Autowired
     CategoryAdminService categoryAdminService;
+
+    @GetMapping("categories/all")
+    public List<Category> getListAllCategories(){
+        return categoryAdminService.getListAllCategories();
+    }
     //    Lấy ds category (có phân trang, mặc định là pageSize = 10)
     //    GET : api/v1/admin/categories?page={page}&pageSize={pageSize}
     @GetMapping("categories")

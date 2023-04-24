@@ -2,6 +2,7 @@ package com.example.blogbackend.mapper;
 
 import com.example.blogbackend.dto.BlogDto;
 import com.example.blogbackend.entity.Blog;
+import org.springframework.data.domain.Page;
 
 public class BlogMapper {
     public static BlogDto toBlogDto(Blog blog) {

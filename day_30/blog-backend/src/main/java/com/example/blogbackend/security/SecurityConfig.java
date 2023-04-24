@@ -61,6 +61,7 @@ public class SecurityConfig {
                 "/api/v1/files/**"
         };
         http
+                .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(PUBLIC).permitAll()

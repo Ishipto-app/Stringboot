@@ -62,4 +62,8 @@ public class CategoryAdminService {
         }
         blogAdminRepository.deleteById(id);
     }
+
+    public List<Category> getListAllCategories() {
+        return categoryAdminRepository.findAll();
+    }
 }

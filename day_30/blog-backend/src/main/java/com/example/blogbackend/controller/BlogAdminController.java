@@ -22,13 +22,13 @@ public class BlogAdminController {
 
     //api/v1/admin/blogs?page={page}&pageSize={pageSize}
     @GetMapping("blogs")
-    public Page<Blog> getAllBlogs(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
+    public Page<BlogDto> getAllBlogs(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
         return blogAdminService.getAllBlogsByPageAndPagesize(page, pageSize);
     }
 
     //api/v1/admin/blogs/own-blogs?page={page}&pageSize={pageSize}
     @GetMapping("blogs/own-blogs")
-    public  Page<Blog> getAllBlogsByUser(HttpServletRequest request, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
+    public  Page<BlogDto> getAllBlogsByUser(HttpServletRequest request, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
         return blogAdminService.getAllBlogsByUser(request, page, pageSize);
     }
 
@@ -40,7 +40,7 @@ public class BlogAdminController {
 
     // api/v1/admin/blogs
     @PostMapping("blogs")
-    public BlogDto createCourse(HttpServletRequest httpRequest, @Valid @RequestBody CreateBlogRequest request){
+    public Blog createCourse(HttpServletRequest httpRequest, @Valid @RequestBody CreateBlogRequest request){
         return blogAdminService.createBlog(httpRequest, request);
     }
 

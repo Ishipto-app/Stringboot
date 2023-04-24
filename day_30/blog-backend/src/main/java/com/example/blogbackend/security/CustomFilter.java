@@ -34,6 +34,7 @@ public class CustomFilter extends OncePerRequestFilter {
 
         // TODO: Lấy token từ trong header
         String jwtToken = authHeader.substring(7);
+        System.out.println(jwtToken);
 
 
         // TODO: Lấy ra userEmail từ trong token

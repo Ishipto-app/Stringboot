@@ -6,6 +6,7 @@ import com.example.blogbackend.entity.Category;
 import com.example.blogbackend.entity.User;
 import com.example.blogbackend.exception.NotFoundException;
 import com.example.blogbackend.mapper.BlogMapper;
+import com.example.blogbackend.mapper.UserMapper;
 import com.example.blogbackend.repository.BlogAdminRepository;
 import com.example.blogbackend.repository.CategoryRepository;
 import com.example.blogbackend.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,20 +36,22 @@ public class BlogAdminService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Page<Blog> getAllBlogsByPageAndPagesize(Integer page, Integer pageSize) {
+    public Page<BlogDto> getAllBlogsByPageAndPagesize(Integer page, Integer pageSize) {
         page = page == null ? 1 : page;
         pageSize = pageSize == null ? 10 : pageSize;
-        return blogAdminRepository.findAll(PageRequest.of(page - 1, pageSize));
+        Page<Blog> blogPage = blogAdminRepository.findByStatusTrueOrderByPublishedAtDesc(PageRequest.of(page - 1, pageSize));
+        Page<BlogDto> blogsDtoPage = blogPage.map(blog -> BlogMapper.toBlogDto(blog));
+        return blogsDtoPage;
     }
 
-    public Page<Blog> getAllBlogsByUser(HttpServletRequest httpRequest, Integer page, Integer pageSize) {
+    public Page<BlogDto> getAllBlogsByUser(HttpServletRequest httpRequest, Integer page, Integer pageSize) {
         page = page == null ? 1 : page;
         pageSize = pageSize == null ? 10 : pageSize;
         String token = httpRequest.getHeader("Authorization").replace("Bearer ", "");
-        System.out.println(token);
         String username = jwtUtils.extractUsername(token);
-        System.out.println(username);
-        return blogAdminRepository.findByUser_Email(username, PageRequest.of(page - 1, pageSize));
+        Page<Blog> blogPage = blogAdminRepository.findByStatusTrueAndUser_Email(username, PageRequest.of(page - 1, pageSize));
+        Page<BlogDto> blogsDtoPage = blogPage.map(blog -> BlogMapper.toBlogDto(blog));
+        return blogsDtoPage;
     }
 
     public BlogDto getBlogById(Integer id) {
@@ -55,7 +59,7 @@ public class BlogAdminService {
         return BlogMapper.toBlogDto(optional.get());
     }
 
-    public BlogDto createBlog(HttpServletRequest httpRequest, CreateBlogRequest request) {
+    public Blog createBlog(HttpServletRequest httpRequest, CreateBlogRequest request) {
         Slugify slugify = Slugify.builder().build();
         String token = httpRequest.getHeader("Authorization").replace("Bearer ", "");
         String username = jwtUtils.extractUsername(token);
@@ -71,7 +75,8 @@ public class BlogAdminService {
                 .user(user)
                 .categories(categories)
                 .build();
-        return BlogMapper.toBlogDto(blogAdminRepository.save(blog));
+        blogAdminRepository.save(blog);
+        return blogAdminRepository.save(blog);
     }
 
     public BlogDto updateBlog(HttpServletRequest httpRequest, Integer id, UpdateBlogRequest request) {
