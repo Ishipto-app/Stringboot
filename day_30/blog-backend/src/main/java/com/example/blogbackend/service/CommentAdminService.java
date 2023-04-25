@@ -35,8 +35,6 @@ public class CommentAdminService {
     private UserRepository userRepository;
 
     public Page<Comment> getAllCommentsByPageAndPagesize(Integer page, Integer pageSize) {
-        page = page == null ? 1 : page;
-        pageSize = pageSize == null ? 10 : pageSize;
         return commentAdminRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
 

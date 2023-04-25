@@ -26,7 +26,7 @@ public class CategoryAdminController {
     //    Lấy ds category (có phân trang, mặc định là pageSize = 10)
     //    GET : api/v1/admin/categories?page={page}&pageSize={pageSize}
     @GetMapping("categories")
-    public Page<Category> getAllCategories(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
+    public Page<Category> getAllCategories(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer pageSize){
         return categoryAdminService.getAllCategoriesByPageAndPagesize(page, pageSize);
     }
     //    Thêm category (Lưu ý tên category không được trùng nhau)

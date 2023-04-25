@@ -37,8 +37,6 @@ public class BlogAdminService {
     private CategoryRepository categoryRepository;
 
     public Page<BlogDto> getAllBlogsByPageAndPagesize(Integer page, Integer pageSize) {
-        page = page == null ? 1 : page;
-        pageSize = pageSize == null ? 10 : pageSize;
         Page<Blog> blogPage = blogAdminRepository.findByStatusTrueOrderByPublishedAtDesc(PageRequest.of(page - 1, pageSize));
         Page<BlogDto> blogsDtoPage = blogPage.map(blog -> BlogMapper.toBlogDto(blog));
         return blogsDtoPage;

@@ -26,7 +26,7 @@ public class UserAdminController {
 	// Lấy ds user (có phân trang, mặc định là pageSize = 10)
 	// GET : api/v1/admin/users?page={page}&pageSize={pageSize}
     @GetMapping("users")
-    public Page<User> getAllUsers(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
+    public Page<User> getAllUsers(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false) Integer pageSize){
         return userAdminService.getAllUsersByPageAndPagesize(page, pageSize);
     }
 	// Tạo user mới

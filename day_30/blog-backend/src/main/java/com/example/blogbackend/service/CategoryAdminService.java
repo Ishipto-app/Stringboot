@@ -32,8 +32,6 @@ public class CategoryAdminService {
     private UserRepository userRepository;
 
     public Page<Category> getAllCategoriesByPageAndPagesize(Integer page, Integer pageSize) {
-        page = page == null ? 1 : page;
-        pageSize = pageSize == null ? 10 : pageSize;
         return categoryAdminRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
 

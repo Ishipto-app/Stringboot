@@ -22,7 +22,7 @@ public class BlogAdminController {
 
     //api/v1/admin/blogs?page={page}&pageSize={pageSize}
     @GetMapping("blogs")
-    public Page<BlogDto> getAllBlogs(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
+    public Page<BlogDto> getAllBlogs(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer pageSize){
         return blogAdminService.getAllBlogsByPageAndPagesize(page, pageSize);
     }
 

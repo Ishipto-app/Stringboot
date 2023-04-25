@@ -20,7 +20,7 @@ public class CommentAdminController {
 //    Hiển thị ds comment (có phân trang, mặc định là pageSize = 10)
 //    GET : api/v1/admin/comments?page={page}&pageSize={pageSize}
     @GetMapping("comments")
-    public Page<Comment> getAllComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
+    public Page<Comment> getAllComments(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer pageSize){
         return commentAdminService.getAllCommentsByPageAndPagesize(page, pageSize);
     }
 
