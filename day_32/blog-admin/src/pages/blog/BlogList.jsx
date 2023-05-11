@@ -2,21 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from "react-helmet";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import NotFound from '../not-found/NotFound';
-import { useGetAllBlogsQuery } from '../../app/apis/blogApi';
+import { useGetAllBlogsQuery, useLazyGetAllBlogsQuery } from '../../app/apis/blogApi';
+import ReactPaginate from "react-paginate";
 
 function BlogList() {
-    let { page, pageSize } = useParams();
-    if(!page) page = 1;
-    if(!pageSize) pageSize = 5;
-    if (!Number(page) || !Number(pageSize)) { // Nếu page không phải là số => NotFoundPage
-        return <NotFound />;
-    }
-    const { data: pageInfo, isLoading: isLoadingBlog } = useGetAllBlogsQuery({
-        page: page,
-        pageSize: pageSize,
-    });
-    if (pageInfo && pageInfo.totalPages < page ) { // Nếu page không phải là số => NotFoundPage
-        return <NotFound />;
+    const {page, pageSize} = useParams(); 
+    const navigate = useNavigate();
+    // const [page, setPage] = useState(1);
+    // const [pageSize, setPageSize] = useState(5);
+
+    const [getBlog, {data: pageInfo, isLoading: isLoadingBlog}] = useLazyGetAllBlogsQuery();
+
+    useEffect(() => {
+        getBlog({
+            page: page ? page : 1,
+            pageSize: pageSize ? pageSize : 5,
+        })
+    }, [page, pageSize])
+
+    const handlePageClick = (selectPage) => {
+        navigate("/admin/blogs/" + (selectPage.selected + 1).toString() + "/" + (pageSize ? pageSize : "5"))
     }
     
     if (isLoadingBlog) {
@@ -25,6 +30,7 @@ function BlogList() {
 
     return (
         <>
+        {pageInfo && (
             <section className="content">
                 <div className="container-fluid">
                     <div className="row py-2">
@@ -70,27 +76,35 @@ function BlogList() {
                                         </tbody>
                                     </table>
                                     <div className="d-flex justify-content-center mt-3" id="pagination">
-                                        <ul className="pagination mb-0">
-                                            {!pageInfo.first && (
-                                                <li className="paginate_button page-item previous"
-                                                    id="example2_previous">
-                                                    <Link to={page == 2 ? "/admin/blogs" : `/admin/blogs/${Number(page) - 1}/5`} aria-controls="example2" 
-                                                        className="page-link">Previous</Link>
-                                                </li>
-                                            )}
-                                            {[...Array(pageInfo.totalPages).keys()].map(pageNumber => (
-                                                <li className="paginate_button page-item active" key={pageNumber}>
-                                                    <Link to={pageNumber == 0 ? "/admin/blogs" : `/admin/blogs/${pageNumber + 1}/5`} aria-controls="example2" 
-                                                        className="page-link">{pageNumber + 1}</Link>
-                                                </li>
-                                            ))}
-                                            {!pageInfo.last && (
-                                                <li className="paginate_button page-item next" id="example2_next">
-                                                    <Link to={`/admin/blogs/${Number(page) + 1}/5`} aria-controls="example2" 
-                                                        className="page-link">Next</Link>
-                                                </li>
-                                            )}
-                                        </ul>
+                                        <ReactPaginate
+                                            nextLabel="next >"
+                                            onPageChange={handlePageClick}
+                                            pageRangeDisplayed={3}
+                                            marginPagesDisplayed={2}
+                                            forcePage={page ? page - 1 : 0}
+                                            pageCount={pageInfo.totalPages}
+                                            previousLabel="< previous"
+                                            pageClassName="page-item"
+                                            pageLinkClassName="page-link"
+                                            previousClassName="page-item"
+                                            previousLinkClassName="page-link"
+                                            nextClassName="page-item"
+                                            nextLinkClassName="page-link"
+                                            breakLabel="..."
+                                            breakClassName="page-item"
+                                            breakLinkClassName="page-link"
+                                            containerClassName="pagination"
+                                            activeClassName="active"
+                                            renderOnZeroPageCount={null}
+                                        />
+                                        {/*
+                                        <div class="form-group">
+                                            <label>Page size</label>
+                                            <select class="form-control" value={pageSize} onChange={navigate("/admin/blogs/" + (selectPage.selected + 1).toString() + "/" + (pageSize ? pageSize : "5"))}>
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                            </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -98,6 +112,7 @@ function BlogList() {
                     </div>
                 </div>
             </section>
+        )}
         </>
     )
 }

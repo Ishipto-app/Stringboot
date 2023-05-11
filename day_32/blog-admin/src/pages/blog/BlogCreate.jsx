@@ -1,21 +1,21 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import useFetchQuery from './hooks/useFetchQuery';
+import useFetchQuery from '../hooks/useFetchQuery';
 import {
     getCategoryOptions,
     getStatusOptions,
-} from "./options/options";
+} from "../options/options";
 import { Link } from 'react-router-dom'
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
-import useCreate from './hooks/useCreate';
+import { useCreateBlog } from '../hooks/useCreate';
 
 function BlogCreate() {
     const navigate = useNavigate();
 
     const { categories, isLoading } = useFetchQuery();
    
-    const { control, register, handleSubmit, errors, onCreateBlog } = useCreate();
+    const { control, register, handleSubmit, errors, onCreateBlog } = useCreateBlog();
 
     const categoryOptions = getCategoryOptions(categories);
     const statusOptions = getStatusOptions();
@@ -32,7 +32,7 @@ function BlogCreate() {
             <form  className="container-fluid" onSubmit={handleSubmit(onCreateBlog)}>
                 <div className="row py-2">
                     <div className="col-6">
-                        <button type="button" className="btn btn-default">
+                        <button type="button" className="btn btn-default" onClick={() => navigate(-1)}>
                             <i className="fas fa-chevron-left"></i> Quay lại
                         </button>
                         <button type="submit" className="btn btn-info px-4">

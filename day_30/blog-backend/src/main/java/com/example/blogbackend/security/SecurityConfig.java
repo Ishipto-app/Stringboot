@@ -55,10 +55,10 @@ public class SecurityConfig {
                 "/",
                 "/login-handle",
                 "/api/v1/public/**",
+                "/api/v1/files/**"
         };
         String[] USER = {
-                "/api/v1/users/**",
-                "/api/v1/files/**"
+                "/api/v1/users/**"
         };
         http
                 .cors().and()

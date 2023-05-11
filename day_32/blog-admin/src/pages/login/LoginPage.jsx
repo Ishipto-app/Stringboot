@@ -3,6 +3,7 @@ import "./LoginPage.css";
 import { useLoginMutation } from '../../app/apis/authApi';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function LoginPage() {
     const navigate = useNavigate()
@@ -20,11 +21,13 @@ function LoginPage() {
         login({email, password})
             .unwrap()
             .then(res => {
-                alert("login thanh cong")
+                toast.success("Dang nhap thanh cong")
                 navigate("/admin/blogs/own-blog")
-                console.log(res)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                toast.error("Error: " + JSON.stringify(err))
+            })
     }
   return (
     <>

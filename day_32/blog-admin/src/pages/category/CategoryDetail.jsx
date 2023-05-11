@@ -1,51 +1,68 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Helmet } from "react-helmet";
-import { Link, useParams } from "react-router-dom";
-import { useGetCategoryByNameQuery } from '../../app/apis/categoryApi';
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useGetCategoryByIdQuery } from '../../app/apis/categoryApi';
+import { useUpdateCategory } from '../hooks/useUpdate';
 
 function CategoryDetail() {
-    const {categoryName} = useParams();
-    const { data: blogs, isLoading: isLoadingBlog, isError: isLoadingBlogError, error: loadingBlogError } = useGetCategoryByNameQuery(categoryName);
+    const navigate = useNavigate();
+    const {categoryId} = useParams();
+    const { data: categoryData, isLoading: isLoadingCategory, isError: isLoadingCategoryError, error: loadingCategoryError } = useGetCategoryByIdQuery(categoryId);
     
-    if(isLoadingBlog) {
+    const { control, register, handleSubmit, errors, setValue, onUpdateCategory } = useUpdateCategory(categoryId);
+    
+    useEffect(() => {
+        if(categoryData){
+            setValue('name', categoryData.name);
+        }
+    }, [categoryData, setValue]);
+
+    if(isLoadingCategory) {
         return <h2>Loading...</h2>
     }
-    if(isLoadingBlogError){
-        return <h2>Error: {loadingBlogError}</h2>
+    if(isLoadingCategoryError){
+        return <h2>Error: {loadingCategoryError}</h2>
     }
   return (
     <>
-        <Helmet>
-            <title>{`Danh mục : ${categoryName}`}</title>
-        </Helmet>
-        <main className="main">
-            <header className="entry-header">
-                <h1 style={{marginBottom: "1rem"}}>Category : {categoryName}</h1>
-            </header>
-
-            {blogs && blogs.map(blog => (
-                <article className="post-entry" key={blog.id}>
-                    <header className="entry-header">
-                        <h2>
-                            {blog.title}
-                        </h2>
-                    </header>
-                    <div className="entry-content">
-                        <p>
-                            {blog.content}
-                        </p>
+    {categoryData && (
+        <section className="content">
+            <form  className="container-fluid" onSubmit={handleSubmit(onUpdateCategory)}>
+                <div className="row py-2">
+                    <div className="col-6">
+                        <button type="button" className="btn btn-default" onClick={() => navigate(-1)}>
+                            <i className="fas fa-chevron-left"></i> Quay lại
+                        </button>
+                        <button type="submit" className="btn btn-info px-4">
+                            Lưu
+                        </button>
+                        <button type="button" className="btn btn-primary px-4">
+                            Preview
+                        </button>
                     </div>
-                    <footer className="entry-footer">
-                        <span>{new Date(blog.pulishedAt).toLocaleDateString()}</span>
-                    </footer>
-                    <Link
-                        className="entry-link"
-                        aria-label={blog.slug}
-                        to={"/blog/" + blog.id + "/" + blog.slug}
-                    ></Link>
-                </article>
-            ))}
-        </main>
+                </div>
+
+                <div className="row">
+                    <div className="col-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <h1 style={{marginBottom: "1rem"}}>Danh mục</h1>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="form-group">
+                                            <label>Name</label>
+                                            <input type="text" className="form-control" id="name" {...register("name")} />
+                                            <p className='text-danger'>{errors.name?.message}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    )}
     </>
   )
 }

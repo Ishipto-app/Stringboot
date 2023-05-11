@@ -53,6 +53,8 @@ export const blogApi = createApi({
 })
 
 export const { 
-    useGetAllBlogsQuery, useGetAllBlogsByUserIdQuery, useGetBlogByIdQuery, useCreateBlogMutation,
-    useUpdateBlogMutation, useDeleteBlogMutation 
+    useGetAllBlogsQuery, useLazyGetAllBlogsQuery, 
+    useGetAllBlogsByUserIdQuery, useLazyGetAllBlogsByUserIdQuery,
+    useGetBlogByIdQuery, useCreateBlogMutation,
+    useUpdateBlogMutation, useDeleteBlogMutation,
 } = blogApi

@@ -58,10 +58,18 @@ public class CategoryAdminService {
         if(optional.isEmpty()) {
             throw new NotFoundException("Not found category with id = " + id);
         }
-        blogAdminRepository.deleteById(id);
+        categoryAdminRepository.deleteById(id);
     }
 
     public List<Category> getListAllCategories() {
         return categoryAdminRepository.findAll();
+    }
+
+    public Category getCategoryById(Integer id) {
+        Optional<Category> optional = categoryAdminRepository.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        throw new NotFoundException("Not found category with id = " + id);
     }
 }

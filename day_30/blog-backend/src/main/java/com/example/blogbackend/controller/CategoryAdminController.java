@@ -1,9 +1,11 @@
 package com.example.blogbackend.controller;
 
+import com.example.blogbackend.dto.CategoryDto;
 import com.example.blogbackend.entity.Category;
 import com.example.blogbackend.request.CreateCategoryRequest;
 import com.example.blogbackend.request.UpdateCategoryRequest;
 import com.example.blogbackend.service.CategoryAdminService;
+import com.example.blogbackend.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +20,23 @@ import java.util.List;
 public class CategoryAdminController {
     @Autowired
     CategoryAdminService categoryAdminService;
+    @Autowired
+    CategoryService categoryService;
 
     @GetMapping("categories/all")
-    public List<Category> getListAllCategories(){
-        return categoryAdminService.getListAllCategories();
+    public List<CategoryDto> getAllCategoriesWithUsed(){
+        return categoryService.getAllCategoriesWithUsed();
     }
+
     //    Lấy ds category (có phân trang, mặc định là pageSize = 10)
     //    GET : api/v1/admin/categories?page={page}&pageSize={pageSize}
     @GetMapping("categories")
     public Page<Category> getAllCategories(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer pageSize){
         return categoryAdminService.getAllCategoriesByPageAndPagesize(page, pageSize);
+    }
+    @GetMapping("categories/{id}")
+    public Category getCategoryById(@PathVariable Integer id){
+        return categoryAdminService.getCategoryById(id);
     }
     //    Thêm category (Lưu ý tên category không được trùng nhau)
     //    POST : api/v1/admin/categories
@@ -48,6 +57,7 @@ public class CategoryAdminController {
     //    DELETE : api/v1/admin/categories/{id}
     @DeleteMapping("categories/{id}")
     public void deleteCategory(@PathVariable Integer id){
+        System.out.println(id);
         categoryAdminService.deleteCategory(id);
     }
 }

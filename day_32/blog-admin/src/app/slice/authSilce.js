@@ -7,7 +7,30 @@ const defaultState = {
     token: null,
     isAuthenticated: false
 }
-const initialState = getData("authBlog") ? getData("authBlog") : defaultState;
+const parseJwt = (token) => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+}
+const isTokenExpired = (token) => {
+    try {
+      const { exp } = parseJwt(token);
+      const currentTime = Date.now() / 1000; // convert to seconds
+      return exp < currentTime;
+    } catch (error) {
+      return true; // invalid token or decoding failed
+    }
+}
+const { token } = getData("authBlog");
+// dam bao co token va token chua exprired
+if(!token || isTokenExpired(token)){
+    setData("authBlog", defaultState)
+}
+const initialState = getData("authBlog")
+// const initialState = getData("authBlog") ? getData("authBlog") : defaultState;
 // const initialState = {
 //     auth: null,
 //     token: null,

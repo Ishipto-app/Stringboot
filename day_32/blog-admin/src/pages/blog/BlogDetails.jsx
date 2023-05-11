@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDeleteBlogMutation, useGetBlogByIdQuery } from '../../app/apis/blogApi';
-import useUpdate from './hooks/useUpdate';
-import useFetchQuery from './hooks/useFetchQuery';
-import { getCategoryOptions, getStatusOptions } from './options/options';
+import { useUpdateBlog } from '../hooks/useUpdate';
+import useFetchQuery from '../hooks/useFetchQuery';
+import { getCategoryOptions, getStatusOptions } from '../options/options';
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
 
 function BlogDetails() {
     const navigate = useNavigate();
     const {blogId} = useParams();
-    const { categories, users, isLoading: loadItem } = useFetchQuery();
+    const { categories, isLoading: loadItem } = useFetchQuery();
     const {data: blogData, isLoading, isError, error} = useGetBlogByIdQuery(blogId);
-    console.log(blogData)
 
-    const { control, register, handleSubmit, errors, setValue, onUpdateBlog } = useUpdate(blogId);
+    const { control, register, handleSubmit, errors, setValue, onUpdateBlog } = useUpdateBlog(blogId);
 
     const categoryOptions = getCategoryOptions(categories);
     const statusOptions = getStatusOptions();
@@ -50,7 +49,7 @@ function BlogDetails() {
             <form  className="container-fluid" onSubmit={handleSubmit(onUpdateBlog)}>
                 <div className="row py-2">
                     <div className="col-6">
-                        <button type="button" className="btn btn-default">
+                        <button type="button" className="btn btn-default" onClick={() => navigate(-1)}>
                             <i className="fas fa-chevron-left"></i> Quay lại
                         </button>
                         <button type="submit" className="btn btn-info px-4">

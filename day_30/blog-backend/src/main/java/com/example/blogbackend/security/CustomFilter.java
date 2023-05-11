@@ -34,7 +34,7 @@ public class CustomFilter extends OncePerRequestFilter {
 
         // TODO: Lấy token từ trong header
         String jwtToken = authHeader.substring(7);
-        System.out.println(jwtToken);
+        System.out.println("vao 1");
 
 
         // TODO: Lấy ra userEmail từ trong token
@@ -43,7 +43,9 @@ public class CustomFilter extends OncePerRequestFilter {
         // TODO: Kiểm tra userEmail -> Tạo đối tượng xác thực
         if(userEmail != null){
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(userEmail);
+            System.out.println("vao 2");
             if(jwtUtils.isTokenValid(jwtToken, userDetails)){
+                System.out.println("vao 3");
                 //Log.info("vao day");
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                         userDetails.getUsername(),

@@ -19,6 +19,6 @@ public class CreateUserRequest {
     private String email;
     @NotEmpty(message = "password không được để trống")
     private String password;
-    private List<Integer> roleIds; // Danh sách id của các role áp dụng
+    private List<Integer> roles; // Danh sách id của các role áp dụng
 }
 

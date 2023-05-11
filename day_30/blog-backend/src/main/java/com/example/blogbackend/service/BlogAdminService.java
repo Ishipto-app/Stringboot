@@ -43,12 +43,13 @@ public class BlogAdminService {
     }
 
     public Page<BlogDto> getAllBlogsByUser(HttpServletRequest httpRequest, Integer page, Integer pageSize) {
-        page = page == null ? 1 : page;
-        pageSize = pageSize == null ? 10 : pageSize;
         String token = httpRequest.getHeader("Authorization").replace("Bearer ", "");
         String username = jwtUtils.extractUsername(token);
+        System.out.println("AAAA");
         Page<Blog> blogPage = blogAdminRepository.findByStatusTrueAndUser_Email(username, PageRequest.of(page - 1, pageSize));
+        System.out.println("BBBB");
         Page<BlogDto> blogsDtoPage = blogPage.map(blog -> BlogMapper.toBlogDto(blog));
+        System.out.println("CCCC");
         return blogsDtoPage;
     }
 

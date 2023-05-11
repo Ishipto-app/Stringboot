@@ -28,7 +28,9 @@ public class BlogAdminController {
 
     //api/v1/admin/blogs/own-blogs?page={page}&pageSize={pageSize}
     @GetMapping("blogs/own-blogs")
-    public  Page<BlogDto> getAllBlogsByUser(HttpServletRequest request, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
+    public  Page<BlogDto> getAllBlogsByUser(HttpServletRequest request, @RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer pageSize){
+        System.out.println("00000");
+
         return blogAdminService.getAllBlogsByUser(request, page, pageSize);
     }
 

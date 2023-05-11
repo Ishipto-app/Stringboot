@@ -17,8 +17,6 @@ public class UpdateUserRequest {
     @NotEmpty(message = "email không được để trống")
     @Email(message = "email khong dung type")
     private String email;
-    @NotEmpty(message = "password không được để trống")
-    private String password;
-    private List<Integer> roleIds; // Danh sách id của các role áp dụng
+    private List<Integer> roles; // Danh sách id của các role áp dụng
 }
 

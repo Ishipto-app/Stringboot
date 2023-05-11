@@ -4,6 +4,7 @@ import { blogApi } from './apis/blogApi'
 import { authApi } from './apis/authApi'
 import authReducer from './slice/authSilce'
 import { userApi } from './apis/userApi'
+import { roleApi } from './apis/roleApi'
 
 //Context api + useReduer thay cho
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     [categoryApi.reducerPath]: categoryApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [blogApi.reducerPath]: blogApi.reducer,
+    [roleApi.reducerPath]: roleApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     auth: authReducer
   },
@@ -19,6 +21,7 @@ export const store = configureStore({
         categoryApi.middleware,
         userApi.middleware,
         blogApi.middleware,
+        roleApi.middleware,
         authApi.middleware,
     ),
 })

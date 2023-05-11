@@ -18,10 +18,37 @@ export const categoryApi = createApi({
     endpoints: (builder) => ({ 
         getAllCategories: builder.query({
             query: () => "categories/all",
+            providesTags: ["Category"]
         }),
-    })
+        getCategoryById: builder.query({
+            query: (id) => "categories/" + id,
+        }),
+        createCategory: builder.mutation({
+            query: (data) => ({
+                url: "categories",
+                method: "POST",
+                body: data
+            })
+        }),
+        updateCategory: builder.mutation({
+            query: ({id, ...data}) => ({
+                url: "categories/" + id,
+                method: "PUT",
+                body: data
+            })
+        }),
+        deleteCategory: builder.mutation({
+            query: (id) => ({
+                url: "categories/" + id,
+                method: "DELETE",
+            }),
+            //invalid tag de goi lai all course
+            invalidatesTags:["Category"]
+        }),
+    }),
 })
 
 export const { 
-    useGetAllCategoriesQuery
+    useGetAllCategoriesQuery, useGetCategoryByIdQuery, useCreateCategoryMutation,
+    useUpdateCategoryMutation, useDeleteCategoryMutation,
 } = categoryApi

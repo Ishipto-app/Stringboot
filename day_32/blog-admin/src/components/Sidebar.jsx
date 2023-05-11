@@ -43,6 +43,7 @@ function Sidebar() {
                             </h5>
                             <ul className="m-0 p-0">
                                 <li><Link to="/admin/category">Danh sách danh mục</Link> </li>
+                                <li><Link to="/admin/category/create">Tạo danh mục</Link> </li>
                             </ul>
                         </div>
                         <div className="menu-item">

@@ -2,29 +2,38 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from "react-helmet";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import NotFound from '../not-found/NotFound';
-import { useGetAllBlogsByUserIdQuery } from '../../app/apis/blogApi';
+import { useGetAllBlogsByUserIdQuery, useLazyGetAllBlogsByUserIdQuery } from '../../app/apis/blogApi';
+import ReactPaginate from "react-paginate";
 
 function OwnBlog() {
-    let { page, pageSize } = useParams();
-    if(!page) page = 1;
-    if(!pageSize) pageSize = 5;
-    if (!Number(page) || !Number(pageSize)) { // Nếu page không phải là số => NotFoundPage
-        return <NotFound />;
-    }
-    const { data: pageInfo, isLoading: isLoadingBlog } = useGetAllBlogsByUserIdQuery({
-        page: page,
-        pageSize: pageSize,
-    });
-    if (pageInfo && pageInfo.totalPages < page ) { // Nếu page không phải là số => NotFoundPage
-        return <NotFound />;
-    }
+    const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
+    // const { data: pageInfo, isLoading: isLoadingBlog } = useGetAllBlogsByUserIdQuery({
+    //     page: page,
+    //     pageSize: pageSize,
+    // });
+
+    const [getBlog, {data: pageInfo, isLoading: isLoadingBlog}] = useLazyGetAllBlogsByUserIdQuery();
     
+    useEffect(() => {
+        getBlog({
+            page: page,
+            pageSize: pageSize,
+        })
+    }, [page, pageSize])
+
+    const handlePageClick = (selectPage) => {
+        setPage(selectPage.selected + 1)
+    }
+
     if (isLoadingBlog) {
         return <h2>Loading ...</h2>;
     }
 
     return (
         <>
+        {pageInfo && (
             <section className="content">
                 <div className="container-fluid">
                     <div className="row py-2">
@@ -66,27 +75,26 @@ function OwnBlog() {
                                         </tbody>
                                     </table>
                                     <div className="d-flex justify-content-center mt-3" id="pagination">
-                                        <ul className="pagination mb-0">
-                                            {!pageInfo.first && (
-                                                <li className="paginate_button page-item previous"
-                                                    id="example2_previous">
-                                                    <Link to={page == 2 ? "/admin/blogs/own-blog" : `/admin/blogs/own-blog/${Number(page) - 1}/5`} aria-controls="example2" 
-                                                        className="page-link">Previous</Link>
-                                                </li>
-                                            )}
-                                            {[...Array(pageInfo.totalPages).keys()].map(pageNumber => (
-                                                <li className="paginate_button page-item active" key={pageNumber}>
-                                                    <Link to={pageNumber == 0 ? "/admin/blogs/own-blog" : `/admin/blogs/own-blog/${pageNumber + 1}/5`} aria-controls="example2" 
-                                                        className="page-link">{pageNumber + 1}</Link>
-                                                </li>
-                                            ))}
-                                            {!pageInfo.last && (
-                                                <li className="paginate_button page-item next" id="example2_next">
-                                                    <Link to={`/admin/blogs/own-blog/${Number(page) + 1}/5`} aria-controls="example2" 
-                                                        className="page-link">Next</Link>
-                                                </li>
-                                            )}
-                                        </ul>
+                                        <ReactPaginate
+                                            nextLabel="next >"
+                                            onPageChange={handlePageClick}
+                                            pageRangeDisplayed={3}
+                                            marginPagesDisplayed={2}
+                                            pageCount={pageInfo.totalPages}
+                                            previousLabel="< previous"
+                                            pageClassName="page-item"
+                                            pageLinkClassName="page-link"
+                                            previousClassName="page-item"
+                                            previousLinkClassName="page-link"
+                                            nextClassName="page-item"
+                                            nextLinkClassName="page-link"
+                                            breakLabel="..."
+                                            breakClassName="page-item"
+                                            breakLinkClassName="page-link"
+                                            containerClassName="pagination"
+                                            activeClassName="active"
+                                            renderOnZeroPageCount={null}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -94,6 +102,7 @@ function OwnBlog() {
                     </div>
                 </div>
             </section>
+        )}
         </>
     )
 }
